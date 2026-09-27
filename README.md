@@ -6,26 +6,18 @@ A free web app for learning the Mandarin spoken in Taiwan: traditional character
 
 | File | What it is |
 |---|---|
-| `index.html` | The app: onboarding, placement test, lessons, Practice (review, flashcards, match), Saved words, Stories list, Daily Life role-plays, settings |
-| `stories.html` | The story reader: graded stories with tap-to-translate and read-aloud |
-| `lessons.html`, `saved.html` | Old addresses from version 1; they forward to the app |
-| `shared/app.js` | Shared settings, Saved Words, theme, Taiwan voice, offline setup |
+| `index.html` | The whole app: onboarding, placement test, lessons, Practice (review, flashcards, match, Saved words), Stories with read-aloud, Daily Life role-plays, Me (progress, goal), settings, backup and restore |
+| `stories.html`, `lessons.html`, `saved.html` | Old addresses from earlier versions; they forward into the app (`stories.html#friend` opens that story) |
+| `shared/app.js` | Theme (Auto, Light, Dark) and offline setup |
 | `sw.js` | Makes the app work offline |
 | `manifest.webmanifest` | App name, icon and colours for installing on a phone |
 | `icons/` | App icons (the 石虎 leopard-cat mascot) |
 | `vendor/hanzi-writer.min.js` | Hanzi Writer 3.7.3 (MIT licence) for stroke-order writing |
 
-## Settings shared across the app
+## Where progress is kept
 
-Everything is stored on the device (browser localStorage, keys starting with `tw.`):
-
-- `tw.mode2`: reading aids (`py` pinyin, `zy` zhuyin, `all` both, `hz` characters only)
-- `tw.theme`: `auto`, `light` or `dark`
-- `tw.rate`: voice speed
-- `tw.saved`: Saved Words, one list for lessons and stories
-- `tw.level`, `tw.bg`, `tw.lessons`, `tw.partial`: level, background and lesson progress
-- `tw.mem`, `tw.best`, `tw.fcfront`, `tw.sfx`: practice memory, match records, flashcard side, sound effects
+Everything is stored in the browser on each device (keys starting with `tw.`). Use Settings › Backup and restore to save a backup file or move progress to another phone. The theme choice is kept under `tw.theme`.
 
 ## Updating the app
 
-Replace the changed files on GitHub. If you add or rename a file, add it to the list at the top of `sw.js` and raise the version number (currently `tw-v2`) so phones pick up the new version.
+Replace the changed files on GitHub. If you add or rename a file, add it to the list at the top of `sw.js` and raise the version number (currently `tw-v3`) so phones pick up the new version.

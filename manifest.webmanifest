@@ -45,7 +45,7 @@
     },
     {
       "name": "Stories",
-      "url": "stories.html",
+      "url": "./#stories",
       "icons": [
         {
           "src": "icons/icon-192.png",
@@ -54,8 +54,8 @@
       ]
     },
     {
-      "name": "Saved words",
-      "url": "./#saved",
+      "name": "Daily Life",
+      "url": "./#life",
       "icons": [
         {
           "src": "icons/icon-192.png",

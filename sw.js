@@ -2,10 +2,9 @@
    Pages are fetched fresh when you're online (so updates show up right away)
    and served from the phone's storage when you're offline.
    When you change the list of files below, bump the version number. */
-const VERSION = 'tw-v2';
+const VERSION = 'tw-v3';
 const APP_FILES = [
-  './', 'index.html', 'lessons.html', 'stories.html', 'saved.html',
-  'shared/app.js', 'vendor/hanzi-writer.min.js',
+  './', 'index.html', 'vendor/hanzi-writer.min.js',
   'manifest.webmanifest', 'icons/favicon.svg', 'icons/icon-192.png', 'icons/icon-512.png',
   'icons/icon-maskable-512.png', 'icons/apple-touch-icon.png'
 ];
