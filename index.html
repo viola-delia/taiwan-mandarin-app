@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>台灣華語 · Taiwan Mandarin</title>
+<meta name="description" content="A free app for learning the Mandarin spoken in Taiwan: traditional characters, Taiwan vocabulary, zhuyin and pinyin, lessons and graded stories.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="台灣華語">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@500;700&display=swap">
+<script src="shared/app.js"></script>
+<link rel="stylesheet" href="shared/app.css">
+<style>
+.hero{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;background:var(--jade-soft);border-radius:20px;padding:16px 18px;margin-top:4px}
+.hero svg{width:92px;height:92px;display:block}
+.hero .hi{display:grid;gap:4px}
+.hero h1{font-size:clamp(24px,6.5vw,30px)}
+.hero p{color:var(--muted);font-size:14px}
+.hero .lvl{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:var(--jade)}
+.hero .lvl i{font-style:normal;background:var(--jade);color:var(--jade-ink);border-radius:6px;padding:0 7px;font-weight:700}
+.cta{display:grid;gap:8px;padding-top:14px}
+.cta small{text-align:center;color:var(--muted);font-size:13px}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile{position:relative;display:grid;gap:4px;align-content:start;text-align:left;text-decoration:none;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px 14px 16px;min-height:132px;color:var(--ink)}
+a.tile:hover{border-color:var(--jade)}
+.tile .ic{width:42px;height:42px;border-radius:12px;background:var(--jade-soft);color:var(--jade);display:grid;place-items:center;font-family:var(--serif);font-size:22px;font-weight:700;margin-bottom:6px}
+.tile b{font-size:16.5px}
+.tile .zhn{font-family:var(--serif);color:var(--muted);font-weight:500;margin-left:4px;font-size:14px}
+.tile small{color:var(--muted);font-size:13px;line-height:1.4}
+.tile .badge{position:absolute;top:12px;right:12px;font-size:12px;font-weight:700;background:var(--amber-soft);color:var(--amber);border-radius:999px;padding:2px 9px;font-variant-numeric:tabular-nums}
+.tile.soon{border-style:dashed;cursor:default}
+.tile.soon .ic{background:var(--bg);color:var(--muted)}
+.tile.soon .badge{background:var(--bg);color:var(--muted)}
+.install{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center}
+.install .ic{width:38px;height:38px;border-radius:10px;background:var(--amber-soft);color:var(--amber);display:grid;place-items:center}
+.install .ic svg{width:20px;height:20px}
+.install > div > b{display:block;font-size:15px}
+.install p{font-size:13.5px;color:var(--muted)}
+.install .btn{grid-column:1/-1;justify-self:start}
+.foot-note{font-size:12.5px;color:var(--muted);text-align:center;padding-top:10px}
+
+/* settings sheet */
+.scrim{position:fixed;inset:0;background:var(--scrim);z-index:20}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:21;margin-inline:auto;max-width:640px;max-height:88vh;overflow:auto;background:var(--surface);border-radius:20px 20px 0 0;border:1px solid var(--line);border-bottom:0;padding:18px 20px calc(22px + env(safe-area-inset-bottom,0px));display:grid;gap:12px;box-shadow:0 -10px 40px rgba(0,0,0,.18)}
+.sheet .row{display:grid;gap:8px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.sheet .row:last-of-type{border-bottom:0}
+.sheet h3{margin:0;font-size:15px}
+.sheet .x{position:absolute;right:12px;top:10px;border:0;background:none;font-size:24px;line-height:1;color:var(--muted);padding:6px}
+.preview{display:flex;justify-content:center;align-items:flex-end;font-size:40px;min-height:78px;background:var(--bg);border-radius:12px;padding:10px}
+.voice-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.voice-note{font-size:12.5px;color:var(--muted)}
+.voice-note.warn{color:var(--amber)}
+.danger{color:var(--bad)!important}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <a class="brand" href="./"><b>台灣華語</b><span>Taiwan Mandarin</span></a>
+    <button class="icon-b" id="open-settings" aria-label="Display settings" title="Display settings"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="16" cy="7" r="2.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="10" cy="17" r="2.2" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <svg viewBox="-42 -48 84 96" role="img" aria-label="The app's leopard-cat mascot waving">
+        <ellipse cx="0" cy="24" rx="30" ry="22" fill="#D99A5B"/>
+        <path d="M-24 -18 L-30 -40 L-10 -26Z M24 -18 L30 -40 L10 -26Z" fill="#D99A5B"/><path d="M-23 -22 L-26 -34 L-15 -26Z M23 -22 L26 -34 L15 -26Z" fill="#F2C9A0"/>
+        <ellipse cx="0" cy="-6" rx="30" ry="25" fill="#E3A96A"/>
+        <path d="M-5 -30 Q-4 -18 -3 -12 M5 -30 Q4 -18 3 -12" stroke="#FFF5E6" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <g fill="#8A5A2E"><circle cx="-19" cy="-16" r="2.2"/><circle cx="19" cy="-16" r="2.2"/><circle cx="-22" cy="-4" r="1.8"/><circle cx="22" cy="-4" r="1.8"/></g>
+        <circle cx="-10" cy="-6" r="3.4" fill="#23305A"/><circle cx="10" cy="-6" r="3.4" fill="#23305A"/>
+        <circle cx="-9" cy="-7.2" r="1.1" fill="#fff"/><circle cx="11" cy="-7.2" r="1.1" fill="#fff"/>
+        <ellipse cx="-17" cy="3" rx="5" ry="3" fill="#F28C8C" opacity=".7"/><ellipse cx="17" cy="3" rx="5" ry="3" fill="#F28C8C" opacity=".7"/>
+        <path d="M-3 2 Q0 5 3 2" stroke="#23305A" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+        <ellipse cx="33" cy="-20" rx="8" ry="10" fill="#E3A96A" transform="rotate(25 33 -20)"/>
+      </svg>
+      <div class="hi">
+        <h1 id="greet">你好！</h1>
+        <p id="greet-en">Learn the Mandarin spoken in Taiwan.</p>
+        <span class="lvl" id="lvl" hidden></span>
+      </div>
+    </section>
+
+    <div class="cta">
+      <a class="go" id="cta" href="lessons.html">GET STARTED</a>
+      <small id="cta-sub">Pick your level or take a short placement test.</small>
+    </div>
+
+    <section class="section" aria-labelledby="learn-h">
+      <h2 id="learn-h" class="eyebrow">Learn</h2>
+      <div class="tiles">
+        <a class="tile" href="lessons.html"><span class="ic">課</span><b>Lessons<span class="zhn">課程</span></b><small id="t-lessons">Sounds, tones, first words and writing</small></a>
+        <a class="tile" href="stories.html" id="t-stories-a"><span class="ic">讀</span><b>Stories<span class="zhn">故事</span></b><small>Graded readers, Levels 1–5, read aloud</small></a>
+        <a class="tile" href="saved.html"><span class="ic">存</span><b>Saved Words<span class="zhn">生詞</span></b><small id="t-saved">Words you bookmark in lessons and stories</small><span class="badge" id="saved-n">0</span></a>
+        <a class="tile" href="saved.html#review"><span class="ic">練</span><b>Practice<span class="zhn">複習</span></b><small>Review your Saved Words with flashcards</small></a>
+        <div class="tile soon" aria-disabled="true"><span class="ic">說</span><b>Conversations<span class="zhn">對話</span></b><small>Everyday Taiwan: 7-11, bubble tea, taxis…</small><span class="badge">Soon</span></div>
+        <a class="tile" href="lessons.html"><span class="ic">寫</span><b>Writing<span class="zhn">寫字</span></b><small>Trace and write characters, inside each lesson</small></a>
+      </div>
+    </section>
+
+    <section class="section" id="install-sec" hidden>
+      <div class="panel install">
+        <span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div><b>Put the app on your home screen</b><p id="install-how">It opens full screen and works offline.</p></div>
+        <button class="btn primary" id="install-btn" hidden>Install app</button>
+      </div>
+    </section>
+
+    <p class="foot-note">Traditional characters · Taiwan vocabulary · TOCFL levels<br>Your progress is saved on this device only.</p>
+  </main>
+</div>
+
+<div class="scrim" id="scrim" hidden></div>
+<section class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="set-h">
+  <button class="x" id="close-settings" aria-label="Close">×</button>
+  <h2 id="set-h">Display settings</h2>
+  <p class="muted small">These apply everywhere: lessons, stories and Saved Words.</p>
+  <div class="row">
+    <h3>Show with the characters</h3>
+    <div class="seg" id="mode-seg" role="group" aria-label="Reading aids"></div>
+    <div class="preview" id="preview"></div>
+    <p class="muted small">Zhuyin (ㄅㄆㄇ) is Taiwan’s own phonetic alphabet. It sits to the right of each character.</p>
+  </div>
+  <div class="row">
+    <h3>Theme</h3>
+    <div class="seg" id="theme-seg" role="group" aria-label="Theme"></div>
+  </div>
+  <div class="row">
+    <h3>Voice speed</h3>
+    <div class="seg" id="rate-seg" role="group" aria-label="Voice speed"></div>
+    <div class="voice-row"><button class="btn" id="test-voice"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Test the voice</button><span class="voice-note" id="voice-note"></span></div>
+  </div>
+  <div class="row">
+    <h3>Your data</h3>
+    <p class="muted small">Level, lessons, Saved Words and settings are stored in this browser only.</p>
+    <div><button class="link danger" id="erase">Erase everything on this device</button></div>
+  </div>
+</section>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+const $=id=>document.getElementById(id);
+const LEVELS={0:['準備級','Novice','pre-A1'],1:['入門級','Level 1','A1'],2:['基礎級','Level 2','A2'],3:['進階級','Level 3','B1'],4:['高階級','Level 4','B2'],5:['流利級','Level 5','C1–C2']};
+const TOTAL_LESSONS=2;   // update when new lessons are added to lessons.html
+
+function greeting(){
+  const h=new Date().getHours();
+  return h<11?['早安！','Good morning']:h<18?['午安！','Good afternoon']:['晚安！','Good evening'];
+}
+function renderHome(){
+  const s=TW.store, K=TW.KEYS;
+  const bg=s.get(K.bg,null), level=s.get(K.level,null), done=s.get(K.lessons,{});
+  const nDone=Object.keys(done).length, nSaved=TW.saved.count();
+  const started=!!bg;
+  const [zh,en]=greeting();
+  $('greet').textContent=started?zh:'你好！';
+  $('greet-en').textContent=started?`${en}. Ready for today’s Mandarin?`:'Learn the Mandarin spoken in Taiwan: traditional characters, Taiwan words, zhuyin and pinyin.';
+  const lv=$('lvl');
+  if(level!=null&&LEVELS[level]){ lv.hidden=false; lv.innerHTML=`<i>${level===0?'N':level}</i>${LEVELS[level][1]} · ${LEVELS[level][0]} · ${LEVELS[level][2]}`; } else lv.hidden=true;
+  const cta=$('cta'), sub=$('cta-sub');
+  if(!started){ cta.textContent='GET STARTED'; cta.href='lessons.html'; sub.textContent='Pick your level or take a short placement test.'; }
+  else if(level!=null&&level>0){ cta.textContent=`READ A ${LEVELS[level][1].toUpperCase()} STORY`; cta.href='stories.html?level='+level; sub.innerHTML=`Lessons for ${LEVELS[level][1]} are on the way. <a href="lessons.html">Open lessons</a>`; }
+  else if(nDone<TOTAL_LESSONS){ cta.textContent=`CONTINUE · LESSON ${nDone+1}`; cta.href='lessons.html'; sub.textContent=`${nDone} of ${TOTAL_LESSONS} lessons done`; }
+  else { cta.textContent='READ YOUR FIRST STORY'; cta.href='stories.html?level=1'; sub.innerHTML='Novice lessons done. More lessons are on the way. <a href="lessons.html">Review lessons</a>'; }
+  $('t-lessons').textContent=started?`${nDone} of ${TOTAL_LESSONS} done · sounds, tones, first words, writing`:'Sounds, tones, first words and writing';
+  $('saved-n').textContent=nSaved; $('saved-n').hidden=!nSaved;
+  $('t-saved').textContent=nSaved?`${nSaved} word${nSaved>1?'s':''} saved from lessons and stories`:'Bookmark words in lessons and stories';
+  renderInstall();
+}
+
+/* ---------- Install ---------- */
+const isIOS=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+function renderInstall(){
+  const sec=$('install-sec'), btn=$('install-btn'), how=$('install-how');
+  if(TW.isInstalled()){ sec.hidden=true; return; }
+  if(TW.installPrompt){ sec.hidden=false; btn.hidden=false; how.textContent='It opens full screen, like a normal app, and works offline.'; }
+  else if(isIOS){ sec.hidden=false; btn.hidden=true; how.innerHTML='In Safari, tap the <b>Share</b> button, then <b>Add to Home Screen</b>.'; }
+  else { sec.hidden=false; btn.hidden=true; how.innerHTML='In your browser menu (⋮), choose <b>Install app</b> or <b>Add to Home screen</b>.'; }
+}
+$('install-btn').onclick=async()=>{ const p=TW.installPrompt; if(!p) return; p.prompt(); try{ await p.userChoice; }catch(e){} TW.installPrompt=null; renderInstall(); };
+document.addEventListener('tw:installable',renderInstall);
+
+/* ---------- Settings ---------- */
+function renderSettings(){
+  const m=TW.getMode(), t=TW.getTheme(), r=TW.getRate();
+  $('mode-seg').innerHTML=TW.MODES.map(([id,zh,en])=>`<button data-mode="${id}" aria-pressed="${m===id}">${zh}<small>${en}</small></button>`).join('');
+  $('theme-seg').innerHTML=TW.THEMES.map(([id,en])=>`<button data-theme-set="${id}" aria-pressed="${t===id}">${en}</button>`).join('');
+  $('rate-seg').innerHTML=TW.RATES.map(([v,en])=>`<button data-rate="${v}" aria-pressed="${r===v}">${en}<small>${v}×</small></button>`).join('');
+  $('preview').innerHTML=`<span class="zh m-${m}">${TW.ruby('你好嗎？','ni3 hao3 ma5')}</span>`;
+  renderVoice();
+}
+function renderVoice(){ const n=$('voice-note'); n.textContent=TW.voiceNote; n.classList.toggle('warn',TW.voiceOk===false); }
+document.addEventListener('tw:voice',renderVoice);
+let lastFocus=null;
+function openSettings(){ lastFocus=document.activeElement; renderSettings(); $('sheet').hidden=false; $('scrim').hidden=false; $('close-settings').focus({preventScroll:true}); }
+function closeSettings(){ $('sheet').hidden=true; $('scrim').hidden=true; const e=$('erase'); e.textContent='Erase everything on this device'; delete e.dataset.armed; if(lastFocus) lastFocus.focus({preventScroll:true}); }
+$('open-settings').onclick=openSettings; $('close-settings').onclick=closeSettings; $('scrim').onclick=closeSettings;
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&!$('sheet').hidden) closeSettings(); });
+$('sheet').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  if(b.dataset.mode){ TW.setMode(b.dataset.mode); renderSettings(); }
+  else if(b.dataset.themeSet){ TW.setTheme(b.dataset.themeSet); renderSettings(); }
+  else if(b.dataset.rate){ TW.setRate(+b.dataset.rate); renderSettings(); TW.speak('你好，歡迎來台灣。'); }
+});
+$('test-voice').onclick=()=>{ if(!TW.speak('你好，歡迎來台灣。')) toast('Audio isn’t available in this browser.'); };
+$('erase').onclick=e=>{
+  const b=e.currentTarget;
+  if(!b.dataset.armed){ b.dataset.armed='1'; b.textContent='Tap again to erase your level, lessons, Saved Words and settings'; return; }
+  try{ Object.keys(localStorage).filter(k=>k.startsWith('tw.')).forEach(k=>localStorage.removeItem(k)); }catch(err){}
+  TW.applyTheme(); closeSettings(); renderHome(); toast('Everything on this device was erased.');
+};
+
+let toastT; function toast(m){ const t=$('toast'); t.textContent=m; t.hidden=false; clearTimeout(toastT); toastT=setTimeout(()=>t.hidden=true,2200); }
+TW.onSync(()=>{ renderHome(); if(!$('sheet').hidden) renderSettings(); });
+if(location.hash==='#settings') openSettings();
+renderHome();
+</script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Saved Words · 台灣華語</title>
+<meta name="description" content="Your saved Taiwan Mandarin words from lessons and stories, with flashcard review.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="台灣華語">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@500;700&display=swap">
+<script src="shared/app.js"></script>
+<link rel="stylesheet" href="shared/app.css">
+<style>
+.head{display:grid;gap:4px;padding-block:6px 4px}
+.tools{display:grid;gap:10px;padding-block:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:13px}
+.chip[aria-pressed="true"]{border-color:var(--jade);background:var(--jade-soft)}
+.list{display:grid;gap:10px;padding-block:6px 20px}
+.sw{display:grid;grid-template-columns:1fr auto;gap:6px 12px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.sw .word{font-size:30px;line-height:1.3}
+.sw .mn{grid-column:1/-1;font-size:15.5px}
+.sw .meta{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12.5px;color:var(--muted)}
+.tag{font-size:12px;border-radius:6px;padding:1px 8px;background:var(--bg);border:1px solid var(--line);color:var(--muted);text-decoration:none}
+a.tag:hover{border-color:var(--jade);color:var(--jade)}
+.btns{display:flex;gap:6px}
+.icon-s{border:1px solid var(--line);background:var(--bg);border-radius:9px;width:36px;height:36px;display:grid;place-items:center;color:var(--ink)}
+.icon-s svg{width:18px;height:18px}
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:14px;padding:24px 16px;color:var(--muted);text-align:center;display:grid;gap:12px;justify-items:center}
+.empty .btn{justify-self:center}
+
+/* flashcards */
+.review{display:grid;gap:16px;padding-block:8px 24px}
+.rv-top{display:flex;align-items:center;gap:12px}
+.rv-prog{flex:1;height:10px;border-radius:10px;background:var(--line);overflow:hidden}
+.rv-prog i{display:block;height:100%;background:var(--jade);border-radius:10px;transition:width .3s}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:24px 18px;min-height:280px;display:grid;gap:14px;justify-items:center;align-content:center;text-align:center}
+.card .word{font-size:56px;line-height:1.25}
+.card .rd{font-size:15px;color:var(--muted)}
+.card .mn{font-size:20px}
+.card .note{font-size:13.5px;color:var(--muted);background:var(--bg);border-radius:10px;padding:8px 12px;max-width:44ch}
+.rv-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ghost{border:2px solid var(--line);background:var(--surface);border-radius:14px;padding:12px 10px;font-size:15px;font-weight:700;color:var(--muted);box-shadow:0 4px 0 var(--line)}
+.done-box{display:grid;gap:14px;justify-items:center;text-align:center;padding-block:30px}
+.done-box b{font-size:40px;color:var(--jade)}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <a class="icon-b" href="./" aria-label="Home" title="Home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11 12 4l8 7M6 9.5V20h4.5v-5.5h3V20H18V9.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    <div class="brand"><b>生詞</b><span>Saved Words</span></div>
+  </header>
+  <main id="view"></main>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+const $=id=>document.getElementById(id), esc=TW.esc, disp=TW.saved.disp;
+const ICON={
+  spk:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+  del:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M10 7V4h4v3M7 7l1 13h8l1-13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+};
+const S={filter:'all',review:null,lastRemoved:null};
+const lvlTag=l=>l==null?'':l===0?'TOCFL Novice':'TOCFL Level '+l;
+const word=x=>`<span class="zh m-${TW.getMode()}">${TW.ruby(disp(x.k),x.py)}</span>`;
+function items(){ const a=TW.saved.all().slice().reverse(); return S.filter==='all'?a:a.filter(x=>x.src===S.filter); }
+function source(x){
+  if(x.src==='story') return `<a class="tag" href="stories.html?story=${encodeURIComponent(x.ref||x.story||'')}">From “${esc(x.title||'a story')}”</a>`;
+  if(x.src==='lesson') return `<a class="tag" href="lessons.html">From ${esc(x.title||'a lesson')}</a>`;
+  return '';
+}
+function modeSeg(){ const m=TW.getMode(); return `<div class="seg" role="group" aria-label="Reading aids">${TW.MODES.map(([id,zh,en])=>`<button data-mode="${id}" aria-pressed="${m===id}">${zh}<small>${en}</small></button>`).join('')}</div>`; }
+
+function renderList(){
+  const all=TW.saved.all(), list=items();
+  const nL=all.filter(x=>x.src==='lesson').length, nS=all.filter(x=>x.src==='story').length;
+  $('view').innerHTML=`
+    <div class="head"><h1>Saved Words</h1><p class="muted">${all.length?`${all.length} word${all.length>1?'s':''} from your lessons and stories.`:'Words you bookmark in lessons and stories appear here.'}</p></div>
+    ${all.length?`<div class="tools">
+      <button class="go" data-review>REVIEW ${list.length} WITH FLASHCARDS</button>
+      ${modeSeg()}
+      <div class="chips" role="group" aria-label="Filter">
+        <button class="chip" data-filter="all" aria-pressed="${S.filter==='all'}">All ${all.length}</button>
+        <button class="chip" data-filter="lesson" aria-pressed="${S.filter==='lesson'}">Lessons ${nL}</button>
+        <button class="chip" data-filter="story" aria-pressed="${S.filter==='story'}">Stories ${nS}</button>
+      </div></div>
+      <div class="list">${list.length?list.map(x=>`
+        <div class="sw">
+          <div class="word">${word(x)}</div>
+          <div class="btns">
+            <button class="icon-s" data-say="${esc(disp(x.k))}" aria-label="Listen to ${esc(disp(x.k))}">${ICON.spk}</button>
+            <button class="icon-s" data-remove="${esc(x.k)}" aria-label="Remove ${esc(disp(x.k))}">${ICON.del}</button>
+          </div>
+          <div class="mn">${esc(x.en||'')}</div>
+          <div class="meta">${x.lvl!=null?`<span class="tag">${lvlTag(x.lvl)}</span>`:''}${source(x)}</div>
+        </div>`).join(''):`<p class="muted">Nothing saved from here yet.</p>`}</div>`
+    :`<div class="empty"><p>No saved words yet. In a story, tap a word and then <b>Save word</b>. In a lesson, tap the bookmark next to a new word.</p>
+      <a class="btn primary" href="stories.html">Open Stories</a></div>`}`;
+}
+
+/* ---------- Flashcards ---------- */
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function startReview(){ const list=items(); if(!list.length) return; S.review={q:shuffle(list),i:0,shown:false,known:0,again:[]}; renderReview(); TW.speak(disp(S.review.q[0].k)); }
+function renderReview(){
+  const R=S.review;
+  if(R.i>=R.q.length){
+    $('view').innerHTML=`<div class="done-box"><div class="eyebrow">Review complete</div><b>${R.known} / ${R.q.length}</b><p class="muted">${R.again.length?`${R.again.length} word${R.again.length>1?'s':''} to look at again.`:'You knew every word. 太棒了！'}</p>
+      ${R.again.length?`<button class="go" data-again>REVIEW THE ${R.again.length} AGAIN</button>`:''}<button class="link" data-list>Back to Saved Words</button></div>`;
+    return;
+  }
+  const x=R.q[R.i], m=TW.getMode(), cardMode=R.shown&&m==='hz'?'all':m;
+  $('view').innerHTML=`<div class="review">
+    <div class="rv-top"><button class="link" data-list>Close</button><div class="rv-prog"><i style="width:${R.i/R.q.length*100}%"></i></div><span class="muted small">${R.i+1}/${R.q.length}</span></div>
+    <div class="card">
+      <div class="word"><span class="zh m-${cardMode}">${TW.ruby(disp(x.k),x.py)}</span></div>
+      <button class="icon-s" data-say="${esc(disp(x.k))}" aria-label="Listen again">${ICON.spk}</button>
+      ${R.shown?`<div class="mn">${esc(x.en||'')}</div>${x.note?`<div class="note">${esc(x.note)}</div>`:''}`:`<p class="muted small">Do you remember what it means?</p>`}
+    </div>
+    ${R.shown?`<div class="rv-actions"><button class="ghost" data-grade="0">Again</button><button class="go" data-grade="1">I KNEW IT</button></div>`
+             :`<button class="go" data-show>SHOW THE MEANING</button>`}
+  </div>`;
+}
+
+/* ---------- Events ---------- */
+document.addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  if(b.dataset.mode){ TW.setMode(b.dataset.mode); redraw(); return; }
+  if(b.dataset.filter){ S.filter=b.dataset.filter; redraw(); return; }
+  if(b.dataset.say){ if(!TW.speak(b.dataset.say)) toast('Audio isn’t available in this browser.'); return; }
+  if(b.dataset.remove){ const k=b.dataset.remove; S.lastRemoved=TW.saved.all().find(x=>x.k===k); TW.saved.remove(k); redraw(); toast(`${disp(k)} removed`,true); return; }
+  if(b.hasAttribute('data-review')){ startReview(); return; }
+  if(b.hasAttribute('data-show')){ S.review.shown=true; renderReview(); return; }
+  if(b.dataset.grade){ const R=S.review; const x=R.q[R.i]; if(b.dataset.grade==='1') R.known++; else R.again.push(x);
+    R.i++; R.shown=false; renderReview(); if(R.i<R.q.length) TW.speak(disp(R.q[R.i].k)); return; }
+  if(b.hasAttribute('data-again')){ const q=shuffle(S.review.again); S.review={q,i:0,shown:false,known:0,again:[]}; renderReview(); TW.speak(disp(q[0].k)); return; }
+  if(b.hasAttribute('data-list')){ S.review=null; history.replaceState(null,'',location.pathname); render(); return; }
+  if(b.hasAttribute('data-undo')){ if(S.lastRemoved){ const a=TW.saved.all(); a.push(S.lastRemoved); TW.store.set(TW.KEYS.saved,a); S.lastRemoved=null; } $('toast').hidden=true; redraw(); return; }
+});
+function redraw(){ if(S.review) renderReview(); else renderList(); }
+function render(){ redraw(); window.scrollTo({top:0}); }
+let toastT; function toast(m,undo){ const t=$('toast'); t.innerHTML=esc(m)+(undo?' · <button class="link" data-undo style="color:inherit">Undo</button>':''); t.hidden=false; clearTimeout(toastT); toastT=setTimeout(()=>t.hidden=true,3500); }
+TW.onSync(()=>{ if(!S.review) renderList(); });
+if(location.hash==='#review'&&TW.saved.count()) startReview(); else render();
+</script>
+</body>
+</html>

@@ -1,0 +1,1143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Lessons · 台灣華語</title>
+<meta name="description" content="Taiwan Mandarin lessons: sounds, tones, first words and writing.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="台灣華語">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<script src="shared/app.js"></script>
+<style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@500;700&display=swap">
+<style>
+/* Curly quotes and apostrophes come from a Latin font, so they don't get full-width CJK spacing */
+@font-face{font-family:"LatinPunct";src:local("Helvetica Neue"),local("HelveticaNeue"),local("Helvetica"),local("Arial"),local("Segoe UI"),local("Roboto"),local("Noto Sans"),local("DejaVu Sans");unicode-range:U+2018-201F,U+2026}
+@font-face{font-family:"LatinPunctSerif";src:local("Georgia"),local("Times New Roman"),local("Times"),local("Noto Serif"),local("DejaVu Serif");unicode-range:U+2018-201F,U+2026}
+:root{
+  --bg:#F2F5F3; --surface:#FFFFFF; --ink:#18201C; --muted:#5B6660; --line:#D6DDD8;
+  --jade:#0D7A63; --jade-ink:#FFFFFF; --jade-soft:#DDF0E9;
+  --amber:#B8600B; --amber-soft:#FBEAD6;
+  --bad:#B53A2E; --bad-soft:#F8E1DD; --scrim:rgba(12,18,15,.42);
+  --pic-bg:#E6F2EC;
+  --sans:"LatinPunct","Noto Sans TC",system-ui,-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;
+  --serif:"LatinPunctSerif","Noto Serif TC","Songti TC","PMingLiU",serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#101412; --surface:#19201C; --ink:#E5EBE7; --muted:#99A69F; --line:#2B3530;
+    --jade:#4CC6A5; --jade-ink:#08140F; --jade-soft:#16362C;
+    --amber:#F0A452; --amber-soft:#3A2812;
+    --bad:#F08A7C; --bad-soft:#3D1D19; --scrim:rgba(0,0,0,.6);
+    --pic-bg:#1F2B26;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#101412; --surface:#19201C; --ink:#E5EBE7; --muted:#99A69F; --line:#2B3530;
+  --jade:#4CC6A5; --jade-ink:#08140F; --jade-soft:#16362C;
+  --amber:#F0A452; --amber-soft:#3A2812;
+  --bad:#F08A7C; --bad-soft:#3D1D19; --scrim:rgba(0,0,0,.6);
+  --pic-bg:#1F2B26;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{min-height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55;padding-inline:16px;padding-block:0 150px}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:2px solid var(--jade);outline-offset:2px}
+.app{max-width:620px;margin-inline:auto}
+
+/* top bar */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;align-items:center;gap:12px;padding-block:14px 12px}
+.icon-b{border:0;background:none;padding:4px;color:var(--muted);font-size:24px;line-height:1;width:32px}
+.brand{flex:1;display:flex;align-items:baseline;gap:8px}
+.brand b{font-family:var(--serif);font-size:20px;letter-spacing:.04em}
+.brand span{font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.prog{flex:1;height:10px;border-radius:10px;background:var(--line);overflow:hidden}
+.prog i{display:block;height:100%;width:0;background:var(--jade);border-radius:10px;transition:width .35s ease}
+.mode-btn{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:4px 10px;font-size:13px;font-weight:500;white-space:nowrap}
+
+/* stage */
+.stage{padding-block:8px 24px;display:grid;gap:18px}
+.eyebrow{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--jade);font-weight:700}
+h1,h2{font-family:var(--serif);margin:0;text-wrap:balance;letter-spacing:.02em}
+h1{font-size:clamp(26px,7vw,32px);line-height:1.25}
+h2{font-size:clamp(21px,5.6vw,25px);line-height:1.3}
+p{margin:0}
+.lead{font-size:16px;max-width:60ch}
+.muted{color:var(--muted)}
+.small{font-size:13.5px}
+.stack{display:grid;gap:12px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.tw{background:var(--jade-soft);border-radius:12px;padding:12px 14px;font-size:14px;display:grid;gap:4px}
+.tw b{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--jade)}
+ul.clean{margin:0;padding-left:1.1em;display:grid;gap:4px}
+.hero{border-radius:16px;overflow:hidden;aspect-ratio:440/200;max-width:100%;width:100%}
+.hero svg{display:block;width:100%;height:100%}
+
+/* Chinese units: pinyin above, zhuyin to the right */
+.zh{font-family:var(--serif);font-weight:500}
+.c{display:inline-grid;grid-template-columns:auto auto;grid-template-areas:"py ." "hz zy";align-items:end;justify-items:center;vertical-align:bottom}
+.py{grid-area:py;font-family:var(--sans);font-size:.42em;font-weight:400;line-height:1.15;color:var(--muted);white-space:nowrap}
+.hz{grid-area:hz;line-height:1.2}
+.zy{grid-area:zy;writing-mode:vertical-rl;font-family:var(--sans);font-size:.4em;line-height:1;color:var(--muted);align-self:center;margin-left:1px}
+.zy:empty{display:none}
+.m-py .zy,.m-zy .py,.m-hz .zy,.m-hz .py{display:none}
+/* readings written as text follow the same setting */
+.r-zy{display:none}
+.m-zy .r-zy,.m-all .r-zy{display:inline}
+.m-zy .r-py{display:none}
+.m-all .r-zy::before{content:" · "}
+
+/* onboarding + home */
+.choices{display:grid;gap:10px}
+.choice{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;align-items:center;text-align:left;border:2px solid var(--line);background:var(--surface);border-radius:16px;padding:14px 16px;box-shadow:0 3px 0 var(--line)}
+.choice .lv{grid-row:span 2;width:42px;height:42px;border-radius:12px;background:var(--jade-soft);display:grid;place-items:center;color:var(--jade)}
+.choice .lv svg{width:26px;height:26px}
+.choice b{font-size:16px}
+.choice small{color:var(--muted);font-size:13.5px}
+.choice[aria-pressed="true"]{border-color:var(--jade);background:var(--jade-soft);box-shadow:0 3px 0 var(--jade)}
+.lessons{display:grid;gap:12px}
+.lcard{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px 16px;width:100%}
+.lcard:hover{border-color:var(--jade)}
+.lnum{width:48px;height:48px;border-radius:14px;background:var(--jade-soft);color:var(--jade);display:grid;place-items:center;font-family:var(--serif);font-size:22px;font-weight:700}
+.lcard.done .lnum{background:var(--jade);color:var(--jade-ink)}
+.lcard .info{display:grid;gap:2px;min-width:0}
+.lcard .info b{font-size:16.5px}
+.lcard .info small{color:var(--muted);font-size:13.5px}
+.level-panel h2{font-size:22px}
+.lcard.soon{border-style:dashed;cursor:default}
+.lcard.soon .lnum{background:var(--bg);color:var(--muted)}
+.lcard.soon .inline-mode{padding:1px 8px;font-size:12.5px;vertical-align:baseline;color:var(--ink)}
+.back-b{font-size:30px;margin-left:-6px}
+.back-b:disabled{opacity:.3;cursor:default}
+.write-head{display:flex;align-items:center;gap:12px;font-size:34px}
+.write-head .muted{font-size:15px}
+.write-wrap{display:grid;place-items:center}
+.grid-box{width:min(300px,100%);aspect-ratio:1;border:2px solid var(--amber);border-radius:6px;background-color:var(--surface);touch-action:none;
+  background-image:linear-gradient(to right,transparent calc(50% - 1px),var(--amber-soft) calc(50% - 1px),var(--amber-soft) calc(50% + 1px),transparent calc(50% + 1px)),linear-gradient(to bottom,transparent calc(50% - 1px),var(--amber-soft) calc(50% - 1px),var(--amber-soft) calc(50% + 1px),transparent calc(50% + 1px))}
+.grid-box svg{display:block}
+.write-wrap{gap:8px}
+.hw-badge{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:999px;background:var(--amber-soft);color:var(--amber)}
+.hw-badge.turn{background:var(--jade);color:var(--jade-ink);animation:beat 1.6s ease-in-out infinite}
+.hw-badge.done{background:var(--jade-soft);color:var(--jade)}
+.grid-box.turn{border-color:var(--jade);box-shadow:0 0 0 4px var(--jade-soft)}
+@keyframes beat{50%{transform:scale(1.06)}}
+.write-tools{display:flex;gap:8px;justify-content:center}
+.lstate{color:var(--muted)}
+a.lcard{color:inherit;text-decoration:none}
+.lstate{font-size:12.5px;font-weight:700;color:var(--jade);white-space:nowrap}
+.bgline{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;font-size:13.5px;color:var(--muted)}
+.link{border:0;background:none;color:var(--jade);font-weight:500;padding:0;font-size:13.5px;text-decoration:underline;text-underline-offset:3px}
+
+/* anatomy */
+.anat{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center}
+.big{font-family:var(--serif);font-size:84px;font-weight:700;line-height:1;background:var(--surface);border:1px solid var(--line);border-radius:16px;width:120px;height:120px;display:grid;place-items:center}
+.parts{display:grid;gap:8px}
+.part{display:grid;grid-template-columns:78px 1fr;gap:10px;align-items:baseline}
+.part .k{font-size:12px;color:var(--muted)}
+.part .v{font-size:18px;font-weight:500}
+.part .v .muted{font-size:14px;font-weight:400}
+.anat-foot{font-size:13.5px;color:var(--muted)}
+
+/* tones */
+.tones{display:grid;gap:8px}
+.tone{display:grid;grid-template-columns:30px 64px 1fr auto;gap:12px;align-items:center;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px 12px;width:100%}
+.tone:hover{border-color:var(--jade)}
+.tone .n{font-weight:700;color:var(--jade);font-size:18px;text-align:center}
+.tone svg{width:64px;height:40px;display:block}
+.tone .d{display:grid;gap:1px;min-width:0}
+.tone .d b{font-size:15px}
+.tone .d small{color:var(--muted);font-size:12.5px}
+.tone .ex{display:flex;align-items:center;gap:10px;font-size:26px}
+.tone .ex .mk{font-family:var(--sans);font-size:15px;color:var(--muted);text-align:right;line-height:1.3}
+.grid-l{stroke:var(--line);stroke-width:1}
+.curve{stroke:var(--jade);stroke-width:3.5;fill:none;stroke-linecap:round}
+.dot{fill:var(--jade)}
+.chip{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:6px 10px;display:inline-flex;align-items:center;gap:8px;font-size:20px}
+.cmp{width:100%;border-collapse:collapse;font-size:14px}
+.cmp th{font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);text-align:left;font-weight:500;padding:0 8px 6px 0}
+.cmp td{padding:9px 8px 9px 0;border-top:1px solid var(--line);vertical-align:middle}
+.cmp td.tw-col{color:var(--jade);font-weight:700}
+.cmp td.ml{color:var(--muted)}
+.seg{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.seg button{border:0;background:none;padding:10px 4px;font-size:15px;font-weight:500;display:grid;gap:0;line-height:1.25}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button small{font-size:11px;color:var(--muted);font-weight:400}
+.seg button[aria-pressed="true"]{background:var(--jade-soft)}
+
+/* word list with pictures */
+.wlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:10px}
+.wl{display:grid;justify-items:center;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px 8px 12px;text-align:center}
+.wl:hover{border-color:var(--jade)}
+.wl .pic{width:64px;height:64px}
+.wl .zh{font-size:28px}
+.wl .en{font-size:13.5px;color:var(--muted)}
+.pic{display:block;border-radius:14px;background:var(--pic-bg)}
+
+/* exercises */
+.prompt-zh{font-size:44px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.spk{width:40px;height:40px;border-radius:50%;background:var(--jade-soft);color:var(--jade);display:grid;place-items:center;flex:none;border:0}
+.spk svg{width:20px;height:20px}
+.listen-big{width:72px;height:72px;border-radius:20px;background:var(--jade);color:var(--jade-ink);border:0;display:grid;place-items:center;box-shadow:0 4px 0 color-mix(in srgb,var(--jade) 60%,#000)}
+.listen-big svg{width:34px;height:34px}
+.listen-big:active{transform:translateY(2px);box-shadow:0 2px 0 color-mix(in srgb,var(--jade) 60%,#000)}
+.listen-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.slow{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 12px;font-size:13px;font-weight:500}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opt{border:2px solid var(--line);background:var(--surface);border-radius:14px;padding:14px 10px;font-size:17px;font-weight:500;min-height:64px;display:grid;place-items:center;align-content:center;gap:6px;text-align:center;box-shadow:0 3px 0 var(--line)}
+.opt .sub{display:block;font-size:13px;color:var(--muted);font-weight:400}
+.opt .pic{width:84px;height:84px}
+.opt[aria-pressed="true"]{border-color:var(--jade);background:var(--jade-soft);box-shadow:0 3px 0 var(--jade)}
+.opt.right{border-color:var(--jade);background:var(--jade-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt:disabled{cursor:default}
+.gap-line{font-size:34px;display:flex;align-items:flex-end;flex-wrap:wrap;gap:4px}
+.gap-slot{min-width:64px;height:58px;border-bottom:3px solid var(--line);display:inline-grid;place-items:end center;padding-bottom:2px}
+.gap-slot.filled{border-color:var(--jade)}
+.gap-en{font-size:15px;color:var(--muted)}
+.answer{min-height:74px;border-block:1px solid var(--line);padding-block:10px;display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start}
+.bank{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.tile{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:6px 14px;font-size:18px;font-weight:500;box-shadow:0 3px 0 var(--line);min-height:48px}
+.tile.zh{font-size:28px;padding:4px 12px}
+.tile.used{visibility:hidden}
+.match{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.match .col{display:grid;gap:10px}
+.mt{border:2px solid var(--line);background:var(--surface);border-radius:14px;min-height:66px;font-size:17px;font-weight:500;box-shadow:0 3px 0 var(--line);padding:6px}
+.mt.zh{font-size:26px}
+.mt[aria-pressed="true"]{border-color:var(--jade);background:var(--jade-soft)}
+.mt.done{opacity:.35;box-shadow:none;cursor:default}
+.mt.shake{border-color:var(--bad);background:var(--bad-soft);animation:shake .3s}
+@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.mic{width:96px;height:96px;border-radius:50%;border:0;background:var(--amber);color:#fff;display:grid;place-items:center;margin-inline:auto;box-shadow:0 5px 0 color-mix(in srgb,var(--amber) 55%,#000)}
+.mic svg{width:40px;height:40px}
+.mic.on{animation:pulse 1.2s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 14px var(--amber-soft)}}
+.heard{text-align:center;min-height:24px;font-size:15px}
+.speak-card{display:grid;gap:16px;justify-items:center;text-align:center}
+.speak-card .prompt-zh{font-size:54px;justify-content:center}
+
+/* footer */
+.foot{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--surface);border-top:1px solid var(--line);padding:14px 16px calc(16px + env(safe-area-inset-bottom,0px))}
+.foot.ok{background:var(--jade-soft);border-color:transparent}
+.foot.no{background:var(--bad-soft);border-color:transparent}
+.foot.shown{background:var(--amber-soft);border-color:transparent}
+.foot-in{max-width:620px;margin-inline:auto;display:grid;gap:10px}
+.foot-row{display:grid;grid-template-columns:1fr 1.6fr;gap:10px}
+.fb{display:grid;gap:2px}
+.fb b{font-size:18px}
+.foot.ok .fb b{color:var(--jade)}
+.foot.no .fb b{color:var(--bad)}
+.foot.shown .fb b{color:var(--amber)}
+.fb span{font-size:14.5px}
+.go{border:0;border-radius:14px;padding:14px;font-size:16px;font-weight:700;letter-spacing:.04em;background:var(--jade);color:var(--jade-ink);width:100%;box-shadow:0 4px 0 color-mix(in srgb,var(--jade) 60%,#000)}
+.go:disabled{background:var(--line);color:var(--muted);box-shadow:none;cursor:default}
+.foot.no .go{background:var(--bad);box-shadow:0 4px 0 color-mix(in srgb,var(--bad) 60%,#000);color:#fff}
+.foot.shown .go{background:var(--amber);box-shadow:0 4px 0 color-mix(in srgb,var(--amber) 60%,#000);color:#fff}
+.ghost{border:2px solid var(--line);background:var(--surface);border-radius:14px;padding:12px 10px;font-size:14.5px;font-weight:700;color:var(--muted);box-shadow:0 4px 0 var(--line)}
+.skip{border:0;background:none;color:var(--muted);font-size:14px;font-weight:500;justify-self:center;padding:2px 8px}
+
+/* finish */
+.finish{display:grid;gap:16px;justify-items:center;text-align:center}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;width:100%}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 8px;display:grid;gap:2px}
+.stat b{font-size:24px;font-variant-numeric:tabular-nums;color:var(--jade)}
+.stat span{font-size:12px;color:var(--muted)}
+.learned{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;font-size:22px}
+
+
+/* primer + placement */
+.pairs{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.pair{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 6px;border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:8px 10px;text-align:left}
+.pair .ml{font-size:20px;color:var(--muted)}
+.pair .arr{color:var(--muted);font-size:13px}
+.pair .zh{font-size:22px}
+.pair .ml,.pair .zh{white-space:nowrap}
+.pair small{color:var(--muted);font-size:12px;margin-left:auto}
+.cmp .chip{white-space:nowrap;font-size:19px;padding:4px 8px}
+.cmp td{white-space:nowrap}
+.cmp td:last-child{white-space:normal}
+a.go{display:block;text-align:center;text-decoration:none}
+.pair:hover{border-color:var(--jade)}
+.ladder{display:grid;gap:6px;width:100%;text-align:left}
+.rung{display:grid;grid-template-columns:80px 1fr auto;gap:10px;align-items:center;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:9px 14px}
+.rung span{font-weight:700}
+.rung small{color:var(--muted);font-size:12.5px}
+.rung b{font-size:13px;color:var(--jade)}
+.rung.ok{background:var(--jade-soft);border-color:transparent}
+.rung.here{border:2px solid var(--amber);background:var(--amber-soft)}
+.rung.here b{color:var(--amber)}
+.lvn{font-weight:700;font-size:18px}
+/* speaker cue on anything that plays audio */
+:root{--spk-icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 9v6h4l5 4V5L8 9z' fill='black'/%3E%3Cpath d='M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E")}
+.chip::after,.tone .ex::after,.wl .zh::after{content:"";display:inline-block;flex:none;width:16px;height:16px;background:var(--jade);-webkit-mask:var(--spk-icon) center/contain no-repeat;mask:var(--spk-icon) center/contain no-repeat}
+.wl .zh::after{width:14px;height:14px;margin-left:4px;vertical-align:middle}
+.tone .ex::after{width:20px;height:20px}
+.big{position:relative}
+.big::before{content:"";position:absolute;right:-8px;bottom:-8px;width:32px;height:32px;border-radius:50%;background:var(--jade);box-shadow:0 0 0 3px var(--bg)}
+.big::after{content:"";position:absolute;right:0;bottom:0;width:16px;height:16px;background:var(--jade-ink);-webkit-mask:var(--spk-icon) center/contain no-repeat;mask:var(--spk-icon) center/contain no-repeat}
+.big:hover,.chip:hover{border-color:var(--jade)}
+.tap-hint{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--jade);font-weight:500}
+.tap-hint::before{content:"";width:15px;height:15px;background:currentColor;-webkit-mask:var(--spk-icon) center/contain no-repeat;mask:var(--spk-icon) center/contain no-repeat}
+
+/* sheet */
+.scrim{position:fixed;inset:0;background:var(--scrim);z-index:20}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:21;margin-inline:auto;max-width:620px;background:var(--surface);border-radius:18px 18px 0 0;border:1px solid var(--line);border-bottom:0;padding:18px 20px calc(22px + env(safe-area-inset-bottom,0px));display:grid;gap:12px}
+.toast{position:fixed;left:50%;top:70px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:10px;font-size:13.5px;z-index:30;max-width:calc(100% - 32px)}
+@media (max-width:400px){.opt .pic{width:72px;height:72px}.wlist{grid-template-columns:repeat(2,1fr)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* merged app: home button, bookmarks, theme switch */
+.home-b{display:grid;place-items:center;width:34px;height:34px;margin-left:-6px;border-radius:10px;color:var(--ink);flex:none}
+.home-b svg{width:22px;height:22px}
+.home-b:hover{background:var(--surface)}
+.save-b{border:0;background:none;padding:6px;border-radius:10px;color:var(--muted);display:grid;place-items:center;flex:none}
+.save-b svg{width:22px;height:22px;fill:none}
+.save-b[aria-pressed="true"]{color:var(--amber)}
+.save-b[aria-pressed="true"] svg{fill:currentColor}
+.wl-wrap{position:relative;display:grid}
+.wl-wrap .save-b{position:absolute;top:2px;right:2px}
+.wl-wrap .save-b svg{width:18px;height:18px}
+.seg.seg3{grid-template-columns:repeat(3,1fr)}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top" id="top"></header>
+  <main class="stage" id="stage" aria-live="polite"></main>
+</div>
+<footer class="foot" id="foot"><div class="foot-in" id="foot-in"></div></footer>
+<div class="scrim" id="scrim" hidden></div>
+<section class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-label="Reading aids">
+  <h2 style="font-size:19px">Show with the characters</h2>
+  <div class="seg" data-seg></div>
+  <p class="muted small">Pinyin uses Latin letters. Zhuyin (ㄅㄆㄇ) is Taiwan’s own phonetic alphabet and sits to the right of each character. You can change this any time; Stories use the same setting.</p>
+  <h2 style="font-size:19px">Theme</h2>
+  <div class="seg seg3" data-theme-seg></div>
+  <button class="go" id="sheet-done">Done</button>
+</section>
+<div class="toast" id="toast" hidden></div>
+
+<script src="vendor/hanzi-writer.min.js"></script>
+<script>
+/* Stroke data (Hanzi Writer / Make Me a Hanzi), embedded so the page works offline. Stroke order for these characters matches Taiwan's MOE standard. */
+const STROKES={"你":{"strokes":["M 272 567 Q 306 613 342 669 Q 370 718 395 743 Q 405 753 400 769 Q 396 782 365 808 Q 337 827 316 828 Q 297 827 305 802 Q 318 769 306 741 Q 267 647 207 560 Q 150 476 72 385 Q 60 375 58 367 Q 54 355 70 358 Q 82 359 109 384 Q 155 421 213 493 Q 226 509 241 527 L 272 567 Z","M 241 527 Q 262 506 258 375 Q 258 374 258 370 Q 254 253 221 135 Q 215 114 224 80 Q 236 44 248 32 Q 267 16 279 44 Q 294 86 294 134 Q 303 420 314 485 Q 321 515 295 543 Q 289 549 272 567 C 251 589 227 553 241 527 Z","M 521 560 Q 561 621 602 708 Q 620 751 638 773 Q 645 786 639 799 Q 633 811 602 830 Q 572 846 554 843 Q 535 839 546 817 Q 561 795 552 757 Q 513 619 407 448 Q 398 436 397 430 Q 394 418 409 423 Q 439 432 503 532 L 521 560 Z","M 503 532 Q 527 510 555 520 Q 795 608 782 549 Q 783 543 743 468 Q 736 458 741 453 Q 745 447 756 459 Q 852 532 894 549 Q 904 552 905 561 Q 906 574 876 592 Q 852 605 828 621 Q 800 637 783 630 Q 686 590 521 560 C 492 555 479 550 503 532 Z","M 568 72 Q 531 81 494 91 Q 482 94 483 86 Q 484 79 494 71 Q 569 7 596 -33 Q 611 -49 626 -36 Q 659 -3 661 82 Q 655 149 655 345 Q 656 382 667 407 Q 676 426 659 439 Q 634 461 604 470 Q 585 477 577 469 Q 571 462 582 447 Q 619 384 603 127 Q 597 82 589 74 Q 582 67 568 72 Z","M 444 320 Q 419 262 385 208 Q 364 180 381 144 Q 388 128 409 139 Q 460 181 468 264 Q 472 295 467 319 Q 463 328 456 328 Q 449 327 444 320 Z","M 738 307 Q 789 249 847 168 Q 860 146 876 139 Q 885 138 893 146 Q 908 159 900 204 Q 891 264 743 338 Q 734 345 731 332 Q 728 319 738 307 Z"],"medians":[[[317,812],[342,786],[353,759],[303,663],[249,577],[181,485],[93,386],[68,367]],[[273,558],[274,525],[285,495],[284,441],[273,243],[256,123],[260,41]],[[556,828],[574,817],[595,783],[584,746],[539,640],[481,531],[428,453],[406,431]],[[513,532],[704,585],[796,597],[813,585],[827,563],[798,519],[746,460]],[[586,463],[615,438],[632,412],[627,73],[616,41],[604,30],[558,47],[490,85]],[[455,316],[437,243],[397,151]],[[742,326],[812,265],[856,216],[871,190],[878,154]]],"radStrokes":[0,1]},"好":{"strokes":["M 330 202 Q 361 175 399 134 Q 415 119 424 118 Q 433 118 439 128 Q 446 138 442 170 Q 435 206 361 247 L 319 270 Q 292 286 258 304 Q 237 314 240 335 Q 261 393 281 453 L 293 492 Q 317 568 337 644 Q 347 690 366 715 Q 379 737 373 750 Q 360 769 313 797 Q 294 810 276 801 Q 263 794 273 778 Q 303 733 247 486 L 236 442 Q 218 373 195 336 Q 185 314 206 296 Q 254 268 294 233 L 330 202 Z","M 294 233 Q 287 226 281 217 Q 250 180 196 143 Q 183 134 165 124 Q 149 114 133 104 Q 120 95 131 92 Q 212 86 327 199 Q 328 200 330 202 L 361 247 Q 406 322 421 385 Q 449 488 463 510 Q 473 526 458 537 Q 416 576 387 569 Q 374 565 378 550 Q 387 531 387 507 L 385 481 Q 384 469 382 455 Q 375 376 319 270 L 294 233 Z","M 387 507 Q 341 501 293 492 L 247 486 Q 183 479 115 468 Q 94 465 61 471 Q 48 471 45 462 Q 41 450 49 441 Q 68 422 96 400 Q 106 396 118 402 Q 190 436 236 442 L 281 453 Q 320 463 362 474 Q 372 478 385 481 C 414 489 417 511 387 507 Z","M 671 521 Q 788 635 822 648 Q 843 655 835 672 Q 831 688 760 725 Q 739 735 716 725 Q 661 703 575 676 Q 553 669 498 669 Q 473 669 482 648 Q 491 635 511 623 Q 544 605 578 627 Q 597 636 691 676 Q 706 682 719 673 Q 732 664 726 649 Q 693 595 655 531 C 640 505 649 500 671 521 Z","M 717 430 Q 702 497 671 521 L 655 531 Q 648 535 640 538 Q 618 547 608 540 Q 595 533 608 519 Q 645 491 653 444 Q 656 434 659 421 L 668 384 Q 701 204 658 103 Q 643 76 607 83 Q 576 89 548 94 Q 536 97 542 85 Q 546 78 564 65 Q 604 31 618 5 Q 628 -14 645 -11 Q 660 -10 687 17 Q 775 107 726 391 L 717 430 Z","M 726 391 Q 783 397 947 397 Q 966 398 971 406 Q 977 416 960 430 Q 909 467 848 454 Q 793 445 717 430 L 659 421 Q 562 409 452 393 Q 431 392 447 375 Q 460 362 478 357 Q 497 351 514 356 Q 586 375 668 384 L 726 391 Z"],"medians":[[[282,788],[307,769],[327,733],[264,465],[216,321],[235,298],[386,194],[411,166],[424,133]],[[390,556],[417,530],[424,516],[422,504],[387,361],[338,255],[304,207],[260,165],[206,127],[137,97]],[[59,457],[107,434],[373,491],[380,501]],[[493,656],[517,646],[550,644],[680,692],[706,699],[743,696],[771,669],[765,657],[677,546],[674,535],[663,536]],[[613,530],[637,519],[659,499],[674,474],[687,432],[711,289],[709,166],[692,92],[672,59],[648,41],[551,85]],[[449,384],[504,377],[860,427],[906,426],[960,412]]],"radStrokes":[0,1,2]}};
+/* ---------- Pinyin → tone marks and zhuyin (same engine as the story reader) ---------- */
+const MARKS={a:'āáǎà',e:'ēéěè',i:'īíǐì',o:'ōóǒò',u:'ūúǔù','ü':'ǖǘǚǜ'};
+function toneMark(syl){
+  const t=+syl.slice(-1); let b=syl.slice(0,-1).replace('v','ü');
+  if(!(t>=1&&t<=4)) return b;
+  let idx=b.indexOf('a'); if(idx<0) idx=b.indexOf('e'); if(idx<0&&b.includes('ou')) idx=b.indexOf('o');
+  if(idx<0){ for(let i=b.length-1;i>=0;i--){ if('iouü'.includes(b[i])){idx=i;break;} } }
+  if(idx<0) return b;
+  return b.slice(0,idx)+MARKS[b[idx]][t-1]+b.slice(idx+1);
+}
+const INI={b:'ㄅ',p:'ㄆ',m:'ㄇ',f:'ㄈ',d:'ㄉ',t:'ㄊ',n:'ㄋ',l:'ㄌ',g:'ㄍ',k:'ㄎ',h:'ㄏ',j:'ㄐ',q:'ㄑ',x:'ㄒ',zh:'ㄓ',ch:'ㄔ',sh:'ㄕ',r:'ㄖ',z:'ㄗ',c:'ㄘ',s:'ㄙ'};
+const FIN={a:'ㄚ',o:'ㄛ',e:'ㄜ',ai:'ㄞ',ei:'ㄟ',ao:'ㄠ',ou:'ㄡ',an:'ㄢ',en:'ㄣ',ang:'ㄤ',eng:'ㄥ',er:'ㄦ',ong:'ㄨㄥ',
+ i:'ㄧ',ia:'ㄧㄚ',ie:'ㄧㄝ',iao:'ㄧㄠ',iu:'ㄧㄡ',iou:'ㄧㄡ',ian:'ㄧㄢ',in:'ㄧㄣ',iang:'ㄧㄤ',ing:'ㄧㄥ',iong:'ㄩㄥ',
+ u:'ㄨ',ua:'ㄨㄚ',uo:'ㄨㄛ',uai:'ㄨㄞ',ui:'ㄨㄟ',uei:'ㄨㄟ',uan:'ㄨㄢ',un:'ㄨㄣ',uen:'ㄨㄣ',uang:'ㄨㄤ',ueng:'ㄨㄥ',
+ v:'ㄩ',ve:'ㄩㄝ',van:'ㄩㄢ',vn:'ㄩㄣ'};
+const TONE=['','','ˊ','ˇ','ˋ'];
+function zhuyin(syl){
+  const t=+syl.slice(-1); let b=syl.slice(0,-1).replace('ü','v');
+  let out='';
+  if(/^(zh|ch|sh|r|z|c|s)i$/.test(b)) out=INI[b.slice(0,-1)];
+  else{
+    if(b[0]==='y'){ if(b.startsWith('yi')) b=b.slice(1); else if(b.startsWith('yu')) b='v'+b.slice(2); else b='i'+b.slice(1); }
+    else if(b[0]==='w'){ b = b==='wu' ? 'u' : 'u'+b.slice(1); }
+    let ini=''; const two=b.slice(0,2);
+    if(['zh','ch','sh'].includes(two)){ini=two;b=b.slice(2);}
+    else if(INI[b[0]]&&!'aeiouv'.includes(b[0])){ini=b[0];b=b.slice(1);}
+    if(ini&&'jqx'.includes(ini)&&b[0]==='u') b='v'+b.slice(1);
+    out=(ini?INI[ini]:'')+(FIN[b]??'');
+  }
+  return t===5||t===0 ? '˙'+out : out+TONE[t];
+}
+const pyStr=p=>p.split(' ').map(toneMark).join('');
+const zyStr=p=>p.split(' ').map(zhuyin).join(' ');
+/* A reading written as text, e.g. in feedback: shows pinyin, zhuyin or both, following the display setting */
+const rd=p=>`<span class="r-py">${pyStr(p)}</span><span class="r-zy">${zyStr(p)}</span>`;
+
+/* ---------- Vocabulary (all TOCFL Novice 準備級, checked against tocfl-202307.csv) ---------- */
+const V={
+  '你好':{py:'ni3 hao3',en:'hello'},
+  '謝謝':{py:'xie4 xie5',en:'thank you'},
+  '再見':{py:'zai4 jian4',en:'goodbye'},
+  '你':{py:'ni3',en:'you'},
+  '我':{py:'wo3',en:'I, me'},
+  '好':{py:'hao3',en:'good'},
+  '很':{py:'hen3',en:'very'},
+  '嗎':{py:'ma5',en:'question word'}
+};
+const VOCAB=Object.keys(V);
+
+/* ---------- Pictures: the app's original 石虎 (leopard cat) mascot, no real brands ---------- */
+function face(x,y,s){
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <path d="M-24 -18 L-30 -40 L-10 -26Z M24 -18 L30 -40 L10 -26Z" fill="#D99A5B"/><path d="M-23 -22 L-26 -34 L-15 -26Z M23 -22 L26 -34 L15 -26Z" fill="#F2C9A0"/>
+    <ellipse cx="0" cy="-6" rx="30" ry="25" fill="#E3A96A"/>
+    <path d="M-5 -30 Q-4 -18 -3 -12 M5 -30 Q4 -18 3 -12" stroke="#FFF5E6" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <g fill="#8A5A2E"><circle cx="-19" cy="-16" r="2.2"/><circle cx="19" cy="-16" r="2.2"/><circle cx="-22" cy="-4" r="1.8"/><circle cx="22" cy="-4" r="1.8"/></g>
+    <circle cx="-10" cy="-6" r="3.4" fill="#23305A"/><circle cx="10" cy="-6" r="3.4" fill="#23305A"/>
+    <circle cx="-9" cy="-7.2" r="1.1" fill="#fff"/><circle cx="11" cy="-7.2" r="1.1" fill="#fff"/>
+    <ellipse cx="-17" cy="3" rx="5" ry="3" fill="#F28C8C" opacity=".7"/><ellipse cx="17" cy="3" rx="5" ry="3" fill="#F28C8C" opacity=".7"/>
+    <path d="M-3 2 Q0 5 3 2" stroke="#23305A" stroke-width="1.6" fill="none" stroke-linecap="round"/></g>`;
+}
+function cat(x,y,s){ return `<g transform="translate(${x} ${y}) scale(${s})"><ellipse cx="0" cy="18" rx="30" ry="22" fill="#D99A5B"/>${face(0,0,1)}</g>`; }
+const paw=(x,y,r)=>`<ellipse cx="${x}" cy="${y}" rx="8" ry="10" fill="#E3A96A" transform="rotate(${r||0} ${x} ${y})"/>`;
+const PIC={
+  '你好':`${face(46,58,.9)}${paw(80,34,20)}<g stroke="#0D7A63" stroke-width="3" stroke-linecap="round" fill="none"><path d="M86 18 q6 4 6 10"/><path d="M91 12 q9 6 9 16"/></g>`,
+  '謝謝':`${face(50,62,.9)}<path d="M50 28 C44 16 30 20 34 30 C37 37 50 44 50 44 C50 44 63 37 66 30 C70 20 56 16 50 28Z" fill="#E8483D"/>`,
+  '再見':`<rect x="10" y="14" width="42" height="78" rx="4" fill="#B97A48"/><rect x="14" y="18" width="34" height="74" fill="#8C5A33"/><circle cx="42" cy="56" r="2.5" fill="#E8B04A"/>${face(70,64,.62)}${paw(88,40,25)}<path d="M92 26 q7 5 6 12" stroke="#0D7A63" stroke-width="3" fill="none" stroke-linecap="round"/>`,
+  '你':`<circle cx="66" cy="38" r="13" fill="#6F9FD0"/><path d="M44 90 q0 -30 22 -30 q22 0 22 30z" fill="#6F9FD0"/>${face(24,74,.45)}<path d="M30 58 L50 44" stroke="#0D7A63" stroke-width="4" stroke-linecap="round"/><path d="M42 42 L52 43 L48 52" stroke="#0D7A63" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`,
+  '我':`${face(50,62,.9)}<path d="M84 22 C96 34 90 50 78 52" stroke="#0D7A63" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M76 44 L77 53 L86 54" stroke="#0D7A63" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`,
+  '好':`${face(44,64,.8)}<circle cx="78" cy="30" r="16" fill="#0D7A63"/><path d="M70 30 l6 6 l11 -12" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`,
+  '很':`<g fill="#0D7A63"><rect x="18" y="62" width="16" height="22" rx="3"/><rect x="42" y="44" width="16" height="40" rx="3"/><rect x="66" y="22" width="16" height="62" rx="3"/></g><path d="M16 88 h70" stroke="#5B6660" stroke-width="2"/>`,
+  '嗎':`<path d="M18 20 h64 a8 8 0 0 1 8 8 v36 a8 8 0 0 1 -8 8 h-36 l-14 14 v-14 h-14 a8 8 0 0 1 -8 -8 v-36 a8 8 0 0 1 8 -8z" fill="#FFFFFF" stroke="#0D7A63" stroke-width="3"/><text x="50" y="62" text-anchor="middle" font-family="Georgia, serif" font-size="42" font-weight="700" fill="#0D7A63">?</text>`
+};
+const pic=k=>`<svg class="pic" viewBox="0 0 100 100" role="img" aria-label="${V[k].en}">${PIC[k]}</svg>`;
+const HERO=`<svg viewBox="0 0 440 200" role="img" aria-label="The leopard-cat mascot singing four notes, each at a different pitch">
+  <rect width="440" height="200" fill="#CFE8DF"/>
+  <g stroke="#9CCBB9" stroke-width="2">${[40,70,100,130,160].map(y=>`<line x1="0" x2="440" y1="${y}" y2="${y}"/>`).join('')}</g>
+  <path d="M200 50 L250 50" stroke="#0D7A63" stroke-width="7" stroke-linecap="round"/>
+  <path d="M268 100 L318 50" stroke="#0D7A63" stroke-width="7" stroke-linecap="round"/>
+  <path d="M336 110 Q352 150 366 140 T392 80" stroke="#0D7A63" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <path d="M400 40 L432 150" stroke="#0D7A63" stroke-width="7" stroke-linecap="round"/>
+  <g font-family="Noto Sans TC, sans-serif" font-size="15" font-weight="700" fill="#0D7A63"><text x="218" y="36">mā</text><text x="280" y="44">má</text><text x="346" y="178">mǎ</text><text x="380" y="36">mà</text></g>
+  <ellipse cx="110" cy="190" rx="70" ry="12" fill="#B4DACB"/>
+  ${cat(110,130,1.5)}
+</svg>`;
+const HELLO_ART=`<svg viewBox="0 0 440 200" role="img" aria-label="The leopard-cat mascot waving hello">
+  <rect width="440" height="200" fill="#FBEAD6"/>
+  <g fill="#F0A452" opacity=".5"><circle cx="60" cy="40" r="6"/><circle cx="380" cy="60" r="8"/><circle cx="320" cy="30" r="4"/><circle cx="90" cy="150" r="5"/><circle cx="370" cy="160" r="6"/></g>
+  <ellipse cx="220" cy="190" rx="70" ry="12" fill="#F2D2AE"/>
+  ${cat(220,130,1.5)}
+  <ellipse cx="274" cy="100" rx="12" ry="15" fill="#E3A96A" transform="rotate(25 274 100)"/>
+  <g stroke="#0D7A63" stroke-width="4" fill="none" stroke-linecap="round"><path d="M290 74 q9 6 9 16"/><path d="M298 62 q13 9 13 24"/></g>
+</svg>`;
+
+/* ---------- State ---------- */
+const store={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+let MODE=store.get('tw.mode2','py');
+let BG=store.get('tw.bg',null);          // 'new' | 'mainland' | 'taiwan'
+let DONE=store.get('tw.lessons',{});
+const MODES=[['py','拼音','Pinyin'],['zy','注音','Zhuyin'],['all','拼+注','Both'],['hz','漢字','Hanzi']];
+const BGS=[
+  ['new','I’m completely new','Start from the very beginning'],
+  ['mainland','I’ve studied Mainland Chinese','Simplified characters, Mainland words'],
+  ['taiwan','I already know some Taiwan Mandarin','Traditional characters, Taiwan words']
+];
+let LEVEL=store.get('tw.level',null);   // 0 = Novice … 5 = Level 5
+const LEVELS={0:['準備級','Novice','pre-A1'],1:['入門級','Level 1','A1'],2:['基礎級','Level 2','A2'],3:['進階級','Level 3','B1'],4:['高階級','Level 4','B2'],5:['流利級','Level 5','C1–C2']};
+const lvlName=l=>`${LEVELS[l][1]} · ${LEVELS[l][0]} · ${LEVELS[l][2]}`;
+const READER_URL='stories.html';
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---------- Rendering helpers ---------- */
+function unit(ch,syl){
+  const py=syl?toneMark(syl):'&nbsp;', zy=syl?zhuyin(syl):'';
+  return `<span class="c"><span class="py">${py}</span><span class="hz">${ch}</span><span class="zy">${zy}</span></span>`;
+}
+function R(txt,py){
+  const s=(py||'').split(' '); let i=0;
+  return `<span class="zh">`+[...txt].map(c=>/[，。？！、]/.test(c)?unit(c,null):unit(c,s[i++])).join('')+`</span>`;
+}
+const W=k=>R(k,V[k].py);
+const ICON={
+  spk:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+  mic:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" fill="currentColor"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4M8.5 21h7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+  seed:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21V11M12 11C12 6 8 4 4 4c0 5 3 7 8 7zM12 13c0-4 3-6 8-6 0 4-3 6-8 6z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>',
+  book:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5c3-1 6-1 8 1v14c-2-2-5-2-8-1zM20 5c-3-1-6-1-8 1v14c2-2 5-2 8-1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>',
+  pin:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.5-7-12a7 7 0 0 1 14 0c0 5.5-7 12-7 12z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="9" r="2.5" fill="currentColor"/></svg>'
+};
+const saveBtn=k=>`<button class="save-b" data-save="${esc(k)}" aria-pressed="${TW.saved.has(k)}" aria-label="Save ${esc(k)} to Saved Words" title="Save word"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></button>`;
+const spkBtn=(say,label)=>`<button class="spk" data-say="${esc(say)}" aria-label="Listen: ${esc(label||say)}">${ICON.spk}</button>`;
+function contour(t){
+  const y=l=>36-(l-1)*8;
+  const grid=[1,2,3,4,5].map(l=>`<line class="grid-l" x1="4" x2="60" y1="${y(l)}" y2="${y(l)}"/>`).join('');
+  const path={1:`M8 ${y(5)} L56 ${y(5)}`,2:`M8 ${y(3)} L56 ${y(5)}`,3:`M8 ${y(2)} Q24 ${y(1)+2} 32 ${y(1)} T56 ${y(4)}`,4:`M8 ${y(5)} L56 ${y(1)}`}[t];
+  const mark=t===5?`<circle class="dot" cx="32" cy="${y(2)}" r="4"/>`:`<path class="curve" d="${path}"/>`;
+  return `<svg viewBox="0 0 64 40" aria-hidden="true">${grid}${mark}</svg>`;
+}
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a};
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+
+/* ---------- Lesson 1 teaching cards ---------- */
+const TONES=[
+  {n:1,name:'High and level',how:'A steady high note, like singing “laaa”.',ch:'媽',py:'ma1',en:'mom'},
+  {n:2,name:'Rising',how:'Goes up, like asking “huh?”',ch:'麻',py:'ma2',en:'numb'},
+  {n:3,name:'Low',how:'Drops low. In Taiwan it usually stays there.',ch:'馬',py:'ma3',en:'horse'},
+  {n:4,name:'Falling',how:'Starts high and drops, like a firm “No!”',ch:'罵',py:'ma4',en:'to scold'},
+  {n:5,name:'Neutral',how:'Light and short.',ch:'嗎',py:'ma5',en:'question word',say:'你好嗎'}
+];
+const LEARN={
+welcome:()=>`
+  <div class="hero">${HERO}</div>
+  <div class="eyebrow">Lesson 1 · 第一課</div>
+  <h1>The sounds of Mandarin</h1>
+  <p class="lead">A quick first look at how Mandarin sounds work. In the next lesson you’ll start using real words.</p>
+  <div class="panel"><ul class="clean">
+    <li>One character, one syllable</li>
+    <li>How pinyin shows you the sound</li>
+    <li>The tones that change a word’s meaning</li>
+  </ul></div>
+  <p class="muted small">About 3 minutes. Turn your sound on.</p>`,
+
+syllable:()=>`
+  <div class="eyebrow">How it works</div>
+  <h2>One character = one syllable</h2>
+  <p class="lead">Every Chinese character is read as one syllable. A syllable can have three parts: a starting consonant, a vowel sound and a tone.</p>
+  <div class="anat">
+    <button class="big" data-say="媽" aria-label="Listen: 媽">媽</button>
+    <div class="parts">
+      <div class="part"><span class="k">Initial 聲母</span><span class="v"><span class="r-py">m</span><span class="r-zy">ㄇ</span></span></div>
+      <div class="part"><span class="k">Final 韻母</span><span class="v"><span class="r-py">a</span><span class="r-zy">ㄚ</span></span></div>
+      <div class="part"><span class="k">Tone 聲調</span><span class="v">high, level</span></div>
+      <div class="part"><span class="k">Together</span><span class="v">${rd('ma1')} <span class="muted">· mom</span></span></div>
+    </div>
+  </div>
+  <span class="tap-hint">Tap a character to hear it</span>
+  <p class="anat-foot">The <b>initial</b> is the consonant at the start. The <b>final</b> is the vowel sound that follows. The <b>tone</b> is the pitch of the whole syllable.</p>
+  <div class="panel stack">
+    <p style="font-size:14px">Not every syllable starts with a consonant. 愛 “love” is only a final and a tone:</p>
+    <div class="anat">
+      <button class="big" data-say="愛" aria-label="Listen: 愛" style="width:88px;height:88px;font-size:60px">愛</button>
+      <div class="parts">
+        <div class="part"><span class="k">Initial</span><span class="v"><span class="muted">none</span></span></div>
+        <div class="part"><span class="k">Final</span><span class="v"><span class="r-py">ai</span><span class="r-zy">ㄞ</span></span></div>
+        <div class="part"><span class="k">Tone</span><span class="v">falling</span></div>
+        <div class="part"><span class="k">Together</span><span class="v">${rd('ai4')}</span></div>
+      </div>
+    </div>
+  </div>`,
+
+pinyin:()=>`
+  <div class="eyebrow">Reading the sounds</div>
+  <h2>Pinyin shows you how to say it</h2>
+  <p class="lead">Characters don’t tell you how they sound, so the app writes the sound above them in <b>pinyin</b>: Latin letters with little marks for the tone.</p>
+  <div class="panel" style="display:grid;justify-items:center;gap:8px">
+    <button class="chip" data-say="你好" style="font-size:44px;padding:8px 16px">${R('你好','ni3 hao3')}</button>
+    <span class="muted small">你好 · hello</span>
+  </div>
+  <div class="panel stack">
+    <p class="small">Prefer <b>zhuyin</b> (ㄅㄆㄇ), the phonetic alphabet Taiwanese children learn, or characters only? Choose here, or any time later with the <button class="mode-btn inline-mode" data-open-modes aria-label="Open reading settings">拼 / 注</button> button at the top right of every screen.</p>
+    <div class="seg" data-seg></div>
+  </div>`,
+
+tones:()=>`
+  <div class="eyebrow">The melody of a syllable</div>
+  <h2>Tones change the meaning</h2>
+  <p class="lead">The same sound <b>ma</b> becomes a different word depending on its pitch. Tap each row to hear it.</p>
+  <div class="tones">${TONES.map(t=>`
+    <button class="tone" data-say="${t.say||t.ch}" aria-label="Tone ${t.n}: ${t.ch}">
+      <span class="n">${t.n===5?'·':t.n}</span>${contour(t.n)}
+      <span class="d"><b>${t.name}</b><small>${t.how}</small></span>
+      <span class="ex"><span class="mk">${rd(t.py)}</span><span class="zh">${t.ch}</span></span>
+    </button>`).join('')}</div>
+  <p class="muted small">媽 mom · 麻 numb · 馬 horse · 罵 to scold · 嗎 question word. You don’t need to learn these words yet.</p>`,
+
+words:()=>`
+  <div class="eyebrow">Lesson 2 · 第二課</div>
+  <h1>Your first ${VOCAB.length} words</h1>
+  <p class="lead">Have a look and tap each one to hear it. Next, you’ll meet them one by one.</p>
+  <div class="wlist">${VOCAB.map(k=>`<div class="wl-wrap"><button class="wl" data-say="${k}">${pic(k)}${W(k)}<span class="en">${V[k].en}</span></button>${saveBtn(k)}</div>`).join('')}</div>
+  <p class="muted small">Tap the bookmark to keep a word in your Saved Words.</p>`
+};
+
+/* ---------- Lessons ---------- */
+const LESSONS_BY_LEVEL={0:[1,2]};   // add each level's lessons here as they're built
+const LESSONS={
+  1:{title:'The sounds of Mandarin',desc:'Syllables, pinyin and tones',mins:3,steps:()=>[
+    {t:'learn',id:'welcome'},{t:'learn',id:'syllable'},{t:'learn',id:'pinyin'},{t:'learn',id:'tones'},
+    {t:'tone',ch:'馬',py:'ma3'},{t:'tone',ch:'媽',py:'ma1'},{t:'tone',ch:'罵',py:'ma4'},{t:'tone',ch:'麻',py:'ma2'}
+  ]},
+  2:{title:'Hello and thank you',desc:'Your first 8 words, and writing 你 and 好',mins:7,steps:()=>[
+    {t:'learn',id:'words'},
+    {t:'intro',k:'你好'},{t:'intro',k:'謝謝'},{t:'intro',k:'再見'},
+    {t:'match',pairs:[['你好','hello'],['謝謝','thank you'],['再見','goodbye']]},
+    {t:'intro',k:'你'},{t:'intro',k:'我'},{t:'intro',k:'好'},
+    {t:'meaning',k:'我',opts:['I, me','you','good','hello']},
+    {t:'intro',k:'很'},{t:'intro',k:'嗎'},
+    {t:'gap',pre:'你好',post:'？',py:'ni3 hao3',ans:'嗎',opts:['嗎','很','我'],en:'How are you?'},
+    {t:'orderZh',say:'我很好',py:'wo3 hen3 hao3',ans:['我','很','好'],extra:['你','嗎'],en:'I’m good.'},
+    {t:'orderEn',say:'你好嗎',py:'ni3 hao3 ma5',ans:['How','are','you'],extra:['good','I','thanks']},
+    {t:'match',pairs:[['你','you'],['我','I, me'],['很','very']]},
+    {t:'speak',txt:'你好',py:'ni3 hao3'},
+    {t:'speak',txt:'謝謝',py:'xie4 xie5'},
+    {t:'write',ch:'你',mode:'trace',first:true},{t:'write',ch:'你',mode:'memory'},
+    {t:'write',ch:'好',mode:'trace'},{t:'write',ch:'好',mode:'memory'}
+  ]}
+};
+const PY_READ={'我':'wo3','很':'hen3','好':'hao3','你':'ni3','嗎':'ma5'};
+
+/* ---------- Screens: onboarding, home, lesson ---------- */
+const top_=document.getElementById('top'), stage=document.getElementById('stage'), foot=document.getElementById('foot'), footIn=document.getElementById('foot-in');
+let LID,Q,qi,cur,RES,requeued,finished,writer=null;
+function applyMode(){ document.body.className='m-'+MODE; }
+function topHome(){ top_.innerHTML=`<a class="home-b" href="./" aria-label="Home" title="Home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11 12 4l8 7M6 9.5V20h4.5v-5.5h3V20H18V9.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a><div class="brand"><b>台灣華語</b><span>Lessons</span></div><button class="mode-btn" id="mode-btn" aria-label="Reading aids">拼 / 注</button>`; }
+function topLesson(){ top_.innerHTML=`<button class="icon-b" id="exit" aria-label="Leave lesson" title="Leave lesson">×</button><button class="icon-b back-b" id="back" aria-label="Previous question" title="Previous question">‹</button><div class="prog" role="progressbar" aria-label="Lesson progress"><i id="prog"></i></div><button class="mode-btn" id="mode-btn" aria-label="Reading aids">拼 / 注</button>`; }
+
+function onboarding(){
+  stopSpeaking(); applyMode(); topHome();
+  let sel=BG;
+  stage.innerHTML=`
+    <div class="hero">${HELLO_ART}</div>
+    <div class="eyebrow">Welcome · 歡迎</div>
+    <h1>How much Chinese do you know?</h1>
+    <p class="lead">If you’ve studied before, you’ll skip ahead with a short placement test.</p>
+    <div class="choices">${BGS.map(([id,t,s],i)=>`<button class="choice" data-bg="${id}" aria-pressed="${sel===id}"><span class="lv">${[ICON.seed,ICON.book,ICON.pin][i]}</span><b>${t}</b><small>${s}</small></button>`).join('')}</div>
+`;
+  footIn.innerHTML=`<button class="go" id="go" ${sel?'':'disabled'}>CONTINUE</button>`; foot.className='foot';
+  stage.onclick=e=>{ const b=e.target.closest('[data-bg]'); if(!b) return; sel=b.dataset.bg; stage.querySelectorAll('[data-bg]').forEach(x=>x.setAttribute('aria-pressed',x===b)); document.getElementById('go').disabled=false; };
+  document.getElementById('go').onclick=()=>{ BG=sel; store.set('tw.bg',BG); stage.onclick=null;
+    if(BG==='new'){ if(DONE[1]) home(); else startLesson(1); }
+    else if(BG==='mainland') primer(); else placementIntro(); };
+  window.scrollTo({top:0});
+}
+function home(){
+  stopSpeaking(); stopRec(); Q=null; P=null; applyMode(); topHome(); stage.onclick=null;
+  const bgName=(BGS.find(b=>b[0]===BG)||BGS[0])[1];
+  const lv=LEVEL==null?0:LEVEL, above=lv>0;
+  const mine=LESSONS_BY_LEVEL[lv]||[];
+  const card=id=>{const l=LESSONS[id], d=DONE[id]; return `
+      <button class="lcard${d?' done':''}" data-lesson="${id}">
+        <span class="lnum">${d?'✓':id}</span>
+        <span class="info"><b>${l.title}</b><small>${l.desc} · ${l.mins} min</small></span>
+        <span class="lstate">${d?'REVIEW':'START'}</span>
+      </button>`;};
+  stage.innerHTML=`
+    <div class="eyebrow">${lvlName(lv)}</div>
+    <h1>Your lessons</h1>
+    <div class="lessons">${mine.length?mine.map(card).join(''):`
+      <div class="lcard soon"><span class="lnum">1</span><span class="info"><b>${LEVELS[lv][1]} lessons are on the way</b><small>They’ll appear here as soon as they’re ready.</small></span><span class="lstate">SOON</span></div>`}
+      ${above?`<a class="lcard" href="${READER_URL}?level=${lv}"><span class="lnum">讀</span><span class="info"><b>Read the ${LEVELS[lv][1]} story</b><small>A graded story at your level, read aloud with a Taiwan voice</small></span><span class="lstate">OPEN</span></a>`:''}
+    </div>
+    <div class="bgline">${lv===1?`<button class="link" id="review-novice">Review the Novice lessons</button>`:''}<button class="link" id="retest">${LEVEL==null?'Take the placement test':'Retake the placement test'}</button><button class="link" id="pick-level">Change level</button></div>
+    <p class="bgline">Your background: <b>${bgName}</b> <button class="link" id="change-bg">Change</button></p>
+    <p class="bgline"><button class="link" id="reset">Start over</button><span id="reset-msg">Erases your level, progress and settings on this device.</span></p>`;
+  foot.className='foot';
+  const nextId=mine.find(id=>!DONE[id]);
+  if(mine.length){ footIn.innerHTML=`<button class="go" id="go">${nextId?'START LESSON '+nextId:'REVIEW LESSON '+mine[0]}</button>`;
+    document.getElementById('go').onclick=()=>startLesson(nextId||mine[0]); }
+  else footIn.innerHTML=`<a class="go" href="${READER_URL}?level=${lv}">READ A ${LEVELS[lv][1].toUpperCase()} STORY</a>`;
+  stage.querySelectorAll('[data-lesson]').forEach(b=>b.onclick=()=>startLesson(+b.dataset.lesson));
+  document.getElementById('change-bg').onclick=onboarding;
+  document.getElementById('reset').onclick=e=>{
+    const b=e.currentTarget;
+    if(!b.dataset.armed){ b.dataset.armed='1'; b.textContent='Tap again to erase everything'; b.style.color='var(--bad)'; return; }
+    ['tw.bg','tw.level','tw.lessons','tw.mode2'].forEach(k=>{try{localStorage.removeItem(k)}catch(err){}});
+    BG=null; LEVEL=null; DONE={}; MODE='py'; onboarding();
+  };
+  const rt=document.getElementById('retest'); if(rt) rt.onclick=placementIntro;
+  const pl=document.getElementById('pick-level'); if(pl) pl.onclick=levelPicker;
+  const rn=document.getElementById('review-novice'); if(rn) rn.onclick=()=>startLesson(1);
+  window.scrollTo({top:0});
+}
+function startLesson(id){
+  P=null; LID=id; Q=LESSONS[id].steps().map(s=>({...s})); qi=0; RES={}; requeued=new Set(); finished=false;
+  topLesson(); show();
+}
+
+/* ---------- Mandarin in Taiwan: primer for learners who studied Mainland Chinese ---------- */
+function primer(){
+  stopSpeaking(); Q=null; applyMode(); topHome();
+  const row=(tw,py,ml,en)=>`<tr><td><button class="chip" data-say="${tw}">${tw}</button></td><td class="tw-col">${pyStr(py)}</td><td class="ml">${ml}</td><td class="muted">${en}</td></tr>`;
+  stage.innerHTML=`
+    <div class="eyebrow">Before your test</div>
+    <h1>Mandarin in Taiwan</h1>
+    <p class="lead">It’s the same language you studied. Three things will feel different.</p>
+    <div class="panel stack">
+      <h2 style="font-size:19px">1. Traditional characters</h2>
+      <p class="small muted">Taiwan writes the full, traditional forms. Many characters are identical (人, 大, 好, 我); the others you’ll start recognising quickly.</p>
+      <div class="pairs">${[['谢谢','謝謝','thank you'],['学','學','study'],['车','車','car'],['说','說','speak'],['买','買','buy'],['台湾','臺灣','Taiwan']].map(([s,t,e])=>`<button class="pair" data-say="${t}"><span class="ml">${s}</span><span class="arr">→</span><span class="zh">${t}</span><small>${e}</small></button>`).join('')}</div>
+    </div>
+    <div class="panel stack">
+      <h2 style="font-size:19px">2. Some everyday words</h2>
+      <div style="overflow-x:auto"><table class="cmp">
+        <tr><th>Taiwan</th><th></th><th>Mainland</th><th></th></tr>
+        ${row('捷運','jie2 yun4','地铁','metro')}${row('計程車','ji4 cheng2 che1','出租车','taxi')}${row('腳踏車','jiao3 ta4 che1','自行车','bicycle')}
+        ${row('影片','ying3 pian4','视频','video')}${row('軟體','ruan3 ti3','软件','software')}${row('冷氣','leng3 qi4','空调','air conditioning')}
+        ${row('鳳梨','feng4 li2','菠萝','pineapple')}${row('馬鈴薯','ma3 ling2 shu3','土豆','potato')}
+      </table></div>
+    </div>
+    <div class="panel stack">
+      <h2 style="font-size:19px">3. Pronunciation</h2>
+      <p class="small muted">Taiwan uses fewer neutral tones, almost never adds the Beijing “-r”, and has its own standard readings for some words.</p>
+      <div style="overflow-x:auto"><table class="cmp">
+        <tr><th>Word</th><th>Taiwan</th><th>Mainland</th><th></th></tr>
+        ${row('休息','xiu1 xi2','xiūxi','rest')}${row('星期','xing1 qi2','xīngqī','week')}${row('垃圾','le4 se4','lājī','trash')}${row('哪裡','na3 li3','nǎr (哪儿)','where')}
+      </table></div>
+      <p class="small muted">Taiwanese people learn sounds with zhuyin (ㄅㄆㄇ). You can keep using pinyin, or switch to zhuyin any time with the <button class="mode-btn inline-mode" data-open-modes aria-label="Open reading settings">拼 / 注</button> button at the top right of every screen.</p>
+    </div>`;
+  foot.className='foot'; footIn.innerHTML=`<button class="go" id="go">FIND MY LEVEL</button>`;
+  document.getElementById('go').onclick=placementIntro;
+  window.scrollTo({top:0});
+}
+
+/* ---------- Placement test: TOCFL words by level (checked against tocfl-202307.csv) ---------- */
+const PT={
+  0:[['喜歡','xi3 huan1','to like'],['朋友','peng2 you3','friend'],['睡覺','shui4 jiao4','to sleep'],['天氣','tian1 qi4','weather'],['便宜','pian2 yi2','cheap'],['計程車','ji4 cheng2 che1','taxi'],['眼睛','yan3 jing1','eyes'],['衣服','yi1 fu2','clothes'],['考試','kao3 shi4','exam'],['生病','sheng1 bing4','to be ill']],
+  1:[['醫院','yi1 yuan4','hospital'],['游泳','you2 yong3','to swim'],['腳踏車','jiao3 ta4 che1','bicycle'],['冰箱','bing1 xiang1','fridge'],['圖書館','tu2 shu1 guan3','library'],['房租','fang2 zu1','rent'],['冬天','dong1 tian1','winter'],['旅行','lv3 xing2','to travel'],['樓梯','lou2 ti1','stairs'],['頭髮','tou2 fa3','hair']],
+  2:[['颱風','tai2 feng1','typhoon'],['鄰居','lin2 ju1','neighbour'],['鑰匙','yao4 shi5','key'],['夜市','ye4 shi4','night market'],['垃圾','le4 se4','trash'],['加班','jia1 ban1','to work overtime'],['搬家','ban1 jia1','to move house'],['房東','fang2 dong1','landlord'],['郵票','you2 piao4','stamp'],['停車場','ting2 che1 chang3','parking lot']],
+  3:[['發票','fa1 piao4','receipt'],['車禍','che1 huo4','car accident'],['請假','qing3 jia4','to take time off'],['選舉','xuan3 ju3','election'],['退休','tui4 xiu1','to retire'],['護照','hu4 zhao4','passport'],['謙虛','qian1 xu1','modest'],['押金','ya1 jin1','deposit'],['批評','pi1 ping2','to criticise'],['犧牲','xi1 sheng1','to sacrifice']],
+  4:[['塞車','sai1 che1','traffic jam'],['薪水','xin1 shui3','salary'],['地震','di4 zhen4','earthquake'],['包裹','bao1 guo3','parcel'],['失眠','shi1 mian2','to be unable to sleep'],['猶豫','you2 yu4','to hesitate'],['預算','yu4 suan4','budget'],['罷工','ba4 gong1','to go on strike'],['貸款','dai4 kuan3','loan'],['衝突','chong1 tu2','conflict']],
+  5:[['醞釀','yun4 niang4','to brew (a plan, an idea)'],['輿論','yu2 lun4','public opinion'],['敷衍','fu1 yan3','to do half-heartedly'],['惋惜','wan4 xi2','to feel sorry about (a loss)'],['倘若','tang3 ruo4','if, supposing'],['猖獗','chang1 jue2','rampant'],['彌補','mi2 bu3','to make up for'],['鞏固','gong3 gu4','to consolidate'],['謹慎','jin3 shen4','cautious'],['蔓延','man4 yan2','to spread']]
+};
+const PER_LEVEL=5, PASS=4, FAIL=2;   // 5 questions per level: 4 right passes, 2 wrong stops
+let P=null;
+function placementIntro(){
+  stopSpeaking(); Q=null; applyMode(); topHome();
+  stage.innerHTML=`
+    <div class="hero">${HERO}</div>
+    <div class="eyebrow">Placement test</div>
+    <h1>Find your level</h1>
+    <p class="lead">Quick questions, level by level. Most people answer 10 to 20 (up to 30 if you know a lot). Some words you’ll read, some you’ll only hear. It starts easy and stops when the words get too hard.</p>
+    <div class="tw"><b>Tip</b>Tap “I don’t know” instead of guessing. It gives you a more accurate level.</div>
+    <div class="bgline"><button class="link" id="pick-level">Skip the test and pick my level</button><button class="link" id="from-start">Start from Lesson 1 instead</button></div>`;
+  foot.className='foot'; footIn.innerHTML=`<button class="go" id="go">START THE TEST</button>`;
+  document.getElementById('go').onclick=startPlacement;
+  document.getElementById('pick-level').onclick=levelPicker;
+  document.getElementById('from-start').onclick=()=>{ LEVEL=0; store.set('tw.level',0); startLesson(1); };
+  window.scrollTo({top:0});
+}
+function startPlacement(){
+  P={level:0,n:0,right:0,asked:0,passed:-1,items:null};
+  top_.innerHTML=`<button class="icon-b" id="exit" aria-label="Leave the test" title="Leave the test">×</button><div class="prog" role="progressbar" aria-label="Test progress"><i id="prog"></i></div><button class="mode-btn" id="mode-btn" aria-label="Reading aids">拼 / 注</button>`;
+  nextLevelItems(); ptShow();
+}
+function nextLevelItems(){ P.items=shuffle(PT[P.level]).slice(0,PER_LEVEL); P.n=0; P.right=0; }
+function ptShow(){
+  stopSpeaking(); applyMode();
+  const it=P.items[P.n], listen=(P.asked%2===1);
+  const others=shuffle(PT[P.level].filter(x=>x!==it)).slice(0,3).map(x=>x[2]);
+  P.opts=shuffle([it[2],...others]); P.sel=null; P.cur=it;
+  document.getElementById('prog').style.width=(P.level/6*100+(P.n/PER_LEVEL)*(100/6))+'%';
+  stage.innerHTML=`
+    <div class="eyebrow">${LEVELS[P.level][1]} · question ${P.asked+1}</div>
+    <h2>${listen?'What do you hear?':'What does this mean?'}</h2>
+    ${listen?`<div class="listen-row"><button class="listen-big" data-say="${it[0]}" aria-label="Play again">${ICON.spk}</button><button class="slow" data-say-slow="${it[0]}">Slower</button></div>`
+            :`<div class="prompt-zh">${R(it[0],it[1])}</div>`}
+    <div class="opts">${P.opts.map((o,i)=>`<button class="opt" data-pi="${i}" aria-pressed="false">${o}</button>`).join('')}</div>`;
+  foot.className='foot';
+  footIn.innerHTML=`<div class="foot-row"><button class="ghost" id="idk">I don’t know</button><button class="go" id="go" disabled>NEXT</button></div>`;
+  document.getElementById('go').onclick=()=>ptAnswer(P.opts[P.sel]===it[2]);
+  document.getElementById('idk').onclick=()=>ptAnswer(false);
+  if(listen) setTimeout(()=>say(it[0]),350);
+  window.scrollTo({top:0});
+}
+stage.addEventListener('click',e=>{
+  if(!P||Q) return;
+  const o=e.target.closest('[data-pi]'); if(!o) return;
+  P.sel=+o.dataset.pi; stage.querySelectorAll('[data-pi]').forEach(b=>b.setAttribute('aria-pressed',b===o));
+  document.getElementById('go').disabled=false;
+});
+function ptAnswer(ok){
+  P.asked++; P.n++; if(ok) P.right++;
+  const wrong=P.n-P.right, passed=P.right>=PASS, failed=wrong>=FAIL;
+  if(passed||failed||P.n>=PER_LEVEL){
+    if(passed){ P.passed=P.level; if(P.level<5){ P.level++; nextLevelItems(); return ptShow(); } }
+    return ptResult();
+  }
+  ptShow();
+}
+function ptResult(){
+  stopSpeaking();
+  const rec=Math.min(5,P.passed+1);   // the first level you didn't pass is the one to study
+  const beginner=P.passed<0;
+  document.getElementById('prog').style.width='100%';
+  stage.innerHTML=`<div class="finish">
+    <div class="hero">${HELLO_ART}</div>
+    <div class="eyebrow">Your result</div>
+    <h1>${beginner?'Let’s start with the basics':'Your level: '+LEVELS[rec][1]}</h1>
+    <p class="lead">${beginner?'The Novice words weren’t familiar yet, so the first lessons are the right place to start. They’re short.'
+      :P.passed>=5?'You knew words from every level. Impressive! Level 5 stories and conversations are for you.'
+      :`You know most words up to ${LEVELS[P.passed][1]}. ${LEVELS[rec][1]} is where you’ll learn the most.`}</p>
+    <div class="ladder">${[0,1,2,3,4,5].map(l=>`<div class="rung${l<=P.passed?' ok':''}${l===rec&&!beginner||beginner&&l===0?' here':''}"><span>${LEVELS[l][1]}</span><small>${LEVELS[l][0]} · ${LEVELS[l][2]}</small><b>${l<=P.passed?'✓':l===rec&&!beginner||beginner&&l===0?'Start here':''}</b></div>`).join('')}</div>
+    <button class="link" id="pick-level">Choose a different level</button>
+  </div>`;
+  LEVEL=beginner?0:rec; store.set('tw.level',LEVEL);
+  foot.className='foot'; footIn.innerHTML=`<button class="go" id="go">${beginner?'START LESSON 1':'CONTINUE'}</button>`;
+  document.getElementById('go').onclick=()=>{ P=null; beginner?startLesson(1):home(); };
+  document.getElementById('pick-level').onclick=levelPicker;
+  window.scrollTo({top:0});
+}
+function levelPicker(){
+  stopSpeaking(); P=null; Q=null; applyMode(); topHome();
+  let sel=LEVEL==null?0:LEVEL;
+  stage.innerHTML=`
+    <div class="eyebrow">Choose your level</div>
+    <h1>Where do you want to start?</h1>
+    <p class="lead">Levels follow Taiwan’s official TOCFL word list. You can change this any time.</p>
+    <div class="choices">${[0,1,2,3,4,5].map(l=>`<button class="choice" data-lv="${l}" aria-pressed="${sel===l}"><span class="lv lvn">${l===0?'N':l}</span><b>${LEVELS[l][1]} · ${LEVELS[l][0]}</b><small>${LEVELS[l][2]} · ${['Your first 500 words','Everyday basics','Daily life with confidence','Work, news and opinions','Complex topics','Near-native'][l]}</small></button>`).join('')}</div>`;
+  foot.className='foot'; footIn.innerHTML=`<button class="go" id="go">SAVE</button>`;
+  stage.onclick=e=>{ const b=e.target.closest('[data-lv]'); if(!b) return; sel=+b.dataset.lv; stage.querySelectorAll('[data-lv]').forEach(x=>x.setAttribute('aria-pressed',x===b)); };
+  document.getElementById('go').onclick=()=>{ stage.onclick=null; LEVEL=sel; store.set('tw.level',LEVEL); sel===0&&!DONE[1]?startLesson(1):home(); };
+  window.scrollTo({top:0});
+}
+
+/* ---------- Lesson engine ---------- */
+const isExercise=s=>!['learn'].includes(s.t);
+const CHECKED=['tone','intro','meaning','gap','orderZh','orderEn'];
+function progress(){ const p=document.getElementById('prog'); if(p) p.style.width=((finished?1:qi/Q.length)*100)+'%'; }
+function show(){
+  stopSpeaking(); stopRec();
+  cur={sel:null,picked:[],matched:0,checked:false,missed:false};
+  const s=Q[qi]; progress(); applyMode(); writer=null;
+  const bk=document.getElementById('back'); if(bk){ bk.hidden=false; bk.disabled=qi===0; }
+  stage.innerHTML=VIEW[s.t](s);
+  bindSegs();
+  if(s.t==='write') setupWriter(s);
+  if(['tone','orderZh','orderEn','intro'].includes(s.t)) setTimeout(()=>say(s.t==='tone'?s.ch:s.t==='intro'?s.k:s.say),350);
+  setFoot(CHECKED.includes(s.t)?'check':s.t==='match'?'match':s.t==='speak'?'speak':s.t==='write'?'write':'continue');
+  window.scrollTo({top:0});
+}
+function setFoot(state,msg){
+  foot.className='foot';
+  if(state==='continue') footIn.innerHTML=`<button class="go" id="go">CONTINUE</button>`;
+  else if(state==='check') footIn.innerHTML=`<div class="foot-row"><button class="ghost" id="reveal">Show answer</button><button class="go" id="go" disabled>CHECK</button></div>`;
+  else if(state==='match') footIn.innerHTML=`<div class="foot-row"><button class="ghost" id="reveal">Show answer</button><p class="muted" style="align-self:center;font-size:14px">Tap a word, then its match.</p></div>`;
+  else if(state==='speak') footIn.innerHTML=`<button class="skip" id="skip">I can’t speak right now</button>`;
+  else if(state==='write') footIn.innerHTML=`<div class="foot-row"><button class="ghost" id="wskip">Skip</button><p class="muted" style="align-self:center;font-size:14px">${Q[qi].mode==='trace'?'Watch, then draw over the grey strokes.':'Draw it stroke by stroke.'}</p></div>`;
+  else {
+    foot.classList.add(state);
+    const head=state==='ok'?pick(['Nice!','Correct!','That’s it!','做得好！']):state==='shown'?'Here’s the answer':'Not quite';
+    footIn.innerHTML=`<div class="fb"><b>${head}</b>${msg?`<span>${msg}</span>`:''}</div><button class="go" id="go">CONTINUE</button>`;
+  }
+  const go=document.getElementById('go'); if(go){ go.onclick=onGo; if(!go.disabled) go.focus({preventScroll:true}); }
+  const rv=document.getElementById('reveal'); if(rv) rv.onclick=reveal;
+  const sk=document.getElementById('skip'); if(sk) sk.onclick=()=>{ stopRec(); next(); };
+  const sd=document.getElementById('said'); if(sd) sd.onclick=()=>next();
+  const ws=document.getElementById('wskip'); if(ws) ws.onclick=()=>{ if(writer) try{writer.cancelQuiz()}catch(e){} next(); };
+}
+function enableCheck(on){ const g=document.getElementById('go'); if(g&&!cur.checked) g.disabled=!on; }
+function onGo(){ const s=Q[qi]; if(CHECKED.includes(s.t)&&!cur.checked){ check(); return; } next(); }
+function next(){ qi++; if(qi>=Q.length) finish(); else show(); }
+function requeue(){ if(!Q[qi].copy&&!requeued.has(qi)){ requeued.add(qi); Q.push({...Q[qi],copy:true}); } }
+function goBack(){ if(finished||qi<=0) return; qi--; delete RES[qi]; show(); }
+function result(ok,msg,shown){
+  cur.checked=true;
+  RES[qi]=ok; if(!ok) requeue();
+  stage.querySelectorAll('.opt,.tile,.mt').forEach(b=>b.disabled=true);
+  setFoot(ok?'ok':shown?'shown':'no',msg);
+  progress();
+}
+
+/* The right answer and its explanation, per exercise type */
+function answerOf(s){
+  if(s.t==='tone') return {i:cur.opts.indexOf(s.py),msg:`${s.ch} is ${rd(s.py)}, tone ${s.py.slice(-1)}.`};
+  if(s.t==='intro') return {i:cur.opts.indexOf(s.k),msg:`${s.k} ${rd(V[s.k].py)} means “${V[s.k].en}”.`};
+  if(s.t==='meaning') return {i:cur.opts.indexOf(s.opts[0]),msg:`${s.k} ${rd(V[s.k].py)} means “${s.opts[0]}”.`};
+  if(s.t==='gap') return {i:cur.opts.indexOf(s.ans),msg:`${s.pre}${s.ans}${s.post} ${rd(s.py+' '+PY_READ[s.ans])} · ${s.en}`};
+  if(s.t==='orderZh') return {msg:`${s.ans.join('')}。 ${rd(s.py)} · ${s.en}`};
+  if(s.t==='orderEn') return {msg:`${s.say}？ means “${s.ans.join(' ')}?”`};
+}
+function check(){
+  const s=Q[qi], a=answerOf(s);
+  if(['tone','intro','meaning'].includes(s.t)){ markOpts(a.i); result(cur.sel===a.i,a.msg); }
+  else if(s.t==='gap') result(cur.sel===a.i,a.msg);
+  else if(s.t==='orderZh') result(cur.picked.map(i=>cur.bank[i]).join('')===s.ans.join(''),a.msg);
+  else if(s.t==='orderEn') result(cur.picked.map(i=>cur.bank[i]).join(' ')===s.ans.join(' '),a.msg);
+}
+function reveal(){
+  const s=Q[qi]; if(cur.checked) return;
+  if(s.t==='match'){
+    stage.querySelectorAll('.mt').forEach(b=>{b.classList.add('done');b.setAttribute('aria-pressed','false');});
+    const msg=s.pairs.map(([z,e])=>`${z} ${rd(V[z].py)} = ${e}`).join(' · ');
+    result(false,msg,true); return;
+  }
+  const a=answerOf(s);
+  if(['tone','intro','meaning'].includes(s.t)){ cur.sel=null; stage.querySelectorAll('.opt').forEach(b=>b.setAttribute('aria-pressed','false')); markOpts(a.i); if(s.t==='intro') say(s.k); }
+  else if(s.t==='gap'){ const slot=document.getElementById('slot'); slot.innerHTML=R(s.ans,PY_READ[s.ans]); slot.classList.add('filled'); stage.querySelectorAll('.bank .tile').forEach(b=>b.classList.toggle('used',cur.opts[+b.dataset.i]===s.ans)); }
+  else if(s.t==='orderZh'||s.t==='orderEn'){
+    const used=new Set(); cur.picked=s.ans.map(w=>{ const i=cur.bank.findIndex((x,j)=>x===w&&!used.has(j)); used.add(i); return i; });
+    renderAnswer(); say(s.say);
+  }
+  result(false,a.msg,true);
+}
+function markOpts(right){
+  stage.querySelectorAll('.opt').forEach(b=>{ const i=+b.dataset.i; if(i===right) b.classList.add('right'); else if(i===cur.sel) b.classList.add('wrong'); });
+}
+
+/* ---------- Views ---------- */
+const listenRow=(text)=>`<div class="listen-row"><button class="listen-big" data-say="${text}" aria-label="Play again">${ICON.spk}</button><button class="slow" data-say-slow="${text}">Slower</button></div>`;
+const VIEW={
+  learn:s=>LEARN[s.id](),
+  intro:s=>{
+    cur.opts=shuffle([s.k,...shuffle(VOCAB.filter(k=>k!==s.k)).slice(0,3)]);
+    return `<div class="eyebrow">New word</div><h2>Which picture matches?</h2>
+    <div class="prompt-zh">${W(s.k)}${spkBtn(s.k)}${saveBtn(s.k)}</div>
+    <div class="opts">${cur.opts.map((k,i)=>`<button class="opt" data-i="${i}" aria-pressed="false">${pic(k)}<span>${V[k].en}</span></button>`).join('')}</div>`;
+  },
+  tone:s=>{
+    cur.opts=[1,2,3,4].map(n=>s.py.slice(0,-1)+n);
+    return `<div class="eyebrow">Listen</div><h2>Which tone do you hear?</h2>${listenRow(s.ch)}
+    <div class="opts">${cur.opts.map((p,i)=>`<button class="opt" data-i="${i}" aria-pressed="false">${rd(p)}<span class="sub">tone ${i+1}</span></button>`).join('')}</div>`;
+  },
+  meaning:s=>{
+    cur.opts=shuffle(s.opts);
+    return `<div class="eyebrow">Pick the meaning</div><h2>What does this mean?</h2>
+    <div class="prompt-zh">${W(s.k)}${spkBtn(s.k)}</div>
+    <div class="opts">${cur.opts.map((o,i)=>`<button class="opt" data-i="${i}" aria-pressed="false">${o}</button>`).join('')}</div>`;
+  },
+  gap:s=>{
+    cur.opts=shuffle(s.opts);
+    return `<div class="eyebrow">Fill the gap</div><h2>Complete the sentence</h2>
+    <div class="gap-line">${R(s.pre,s.py)}<span class="gap-slot" id="slot"></span>${R(s.post,'')}</div>
+    <p class="gap-en">${s.en}</p>
+    <div class="bank">${cur.opts.map((o,i)=>`<button class="tile zh" data-i="${i}">${R(o,PY_READ[o])}</button>`).join('')}</div>`;
+  },
+  orderZh:s=>{
+    cur.bank=shuffle([...s.ans,...s.extra]);
+    return `<div class="eyebrow">Listen</div><h2>Tap what you hear</h2>${listenRow(s.say)}
+    <div class="answer" id="answer" aria-label="Your answer"></div>
+    <div class="bank">${cur.bank.map((o,i)=>`<button class="tile zh" data-i="${i}">${R(o,PY_READ[o])}</button>`).join('')}</div>`;
+  },
+  orderEn:s=>{
+    cur.bank=shuffle([...s.ans,...s.extra]);
+    return `<div class="eyebrow">Listen and translate</div><h2>What does it mean in English?</h2>
+    <div class="listen-row"><button class="listen-big" data-say="${s.say}" aria-label="Play again">${ICON.spk}</button><span style="font-size:32px">${R(s.say+'？',s.py)}</span></div>
+    <div class="answer" id="answer" aria-label="Your answer"></div>
+    <div class="bank">${cur.bank.map((o,i)=>`<button class="tile" data-i="${i}">${o}</button>`).join('')}</div>`;
+  },
+  match:s=>{
+    cur.L=shuffle(s.pairs.map((p,i)=>({i,v:p[0]}))); cur.Rt=shuffle(s.pairs.map((p,i)=>({i,v:p[1]})));
+    return `<div class="eyebrow">Match the pairs</div><h2>Tap the matching pairs</h2>
+    <div class="match"><div class="col">${cur.L.map(x=>`<button class="mt zh" data-side="L" data-i="${x.i}" data-say="${x.v}">${W(x.v)}</button>`).join('')}</div>
+    <div class="col">${cur.Rt.map(x=>`<button class="mt" data-side="R" data-i="${x.i}">${x.v}</button>`).join('')}</div></div>`;
+  },
+  speak:s=>`<div class="eyebrow">Speaking</div><h2>Listen, then say it</h2>
+    <div class="speak-card">
+      <div class="prompt-zh">${R(s.txt,s.py)}${spkBtn(s.txt)}</div>
+      <button class="mic" id="mic" aria-label="Record yourself">${ICON.mic}</button>
+      <p class="heard" id="heard">Tap the microphone and say <b>${s.txt}</b>.</p>
+    </div>`,
+  write:s=>{
+    const w=V[s.ch], trace=s.mode==='trace';
+    return `<div class="eyebrow">Writing · ${trace?'trace':'from memory'}</div>
+    <h2 id="hw-title">${trace?`Watch how ${s.ch} is written`:`Now write ${s.ch} without help`}</h2>
+    ${s.first?`<p class="lead">Characters are written stroke by stroke, in a set order: usually top to bottom and left to right. Watch first, then trace.</p>`:''}
+    <div class="write-head">${W(s.ch)}<span class="muted">${w.en}</span>${spkBtn(s.ch)}</div>
+    <div class="write-wrap"><span class="hw-badge${trace?'':' turn'}" id="hw-badge">${trace?'Watch':'Your turn: draw with your finger'}</span><div class="grid-box${trace?'':' turn'}" id="hw"></div></div>
+    <div class="write-tools"><button class="slow" id="hw-watch">Watch the strokes</button><button class="slow" id="hw-reset">Start again</button></div>
+    <p class="heard" id="hw-msg">${trace?'':'If you miss a stroke twice, it will flash to help you.'}</p>`;
+  }
+};
+
+/* ---------- Speaking fallback when the microphone isn't allowed ---------- */
+let micBroken=false;
+const NO_REC='Recording isn’t available here yet.';
+function canListen(){
+  if(!SR) return false;
+  try{ if(document.featurePolicy&&!document.featurePolicy.allowsFeature('microphone')) return false; }catch(e){}
+  return !micBroken;
+}
+/* ---------- Writing (Hanzi Writer) ---------- */
+function tok(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim()||'#000'; }
+function setupWriter(s){
+  const box=document.getElementById('hw'), msg=document.getElementById('hw-msg');
+  if(!window.HanziWriter){ msg.textContent='The writing tool didn’t load. Check your connection, or tap Skip.'; return; }
+  const size=Math.min(box.clientWidth||280,300);
+  const trace=s.mode==='trace';
+  writer=HanziWriter.create(box,s.ch,{
+    width:size,height:size,padding:14,showCharacter:false,showOutline:trace,
+    strokeColor:tok('--ink'),outlineColor:tok('--line'),drawingColor:tok('--jade'),highlightColor:tok('--amber'),
+    drawingWidth:22,strokeAnimationSpeed:1.1,delayBetweenStrokes:180,
+    charDataLoader:(c,done)=>done(STROKES[c])
+  });
+  const badge=document.getElementById('hw-badge'), title=document.getElementById('hw-title');
+  let nudge=null;
+  const stopNudge=()=>{ clearInterval(nudge); nudge=null; };
+  const yourTurn=()=>{
+    badge.textContent='Your turn: draw with your finger'; badge.classList.add('turn'); box.classList.add('turn');
+    if(trace){ title.textContent=`Your turn: trace ${s.ch}`; msg.textContent='Start with the flashing stroke.';
+      const flash=()=>{ try{ writer.highlightStroke(0); }catch(e){} };
+      setTimeout(flash,300); nudge=setInterval(flash,3000); }
+  };
+  const quiz=()=>writer.quiz({
+    showHintAfterMisses:trace?1:2, highlightOnComplete:true,
+    onMistake:()=>{ stopNudge(); msg.textContent=trace?'Not quite. Follow the flashing stroke.':'Try that stroke again.'; },
+    onCorrectStroke:d=>{ stopNudge(); msg.textContent=`Stroke ${d.strokeNum+1} of ${STROKES[s.ch].strokes.length}`; },
+    onComplete:sum=>{
+      if(cur.checked) return; stopNudge(); badge.textContent='Done'; badge.classList.remove('turn'); badge.classList.add('done'); box.classList.remove('turn');
+      cur.checked=true; RES[qi]=true;   // writing is hard: finishing the character always counts as a success
+      setFoot('ok',trace?`${s.ch} has ${STROKES[s.ch].strokes.length} strokes. Next, try it from memory.`:`You wrote ${s.ch}!`);
+    }
+  });
+  const watch=()=>{ stopNudge(); badge.textContent='Watch'; badge.classList.remove('turn'); box.classList.remove('turn'); };
+  document.getElementById('hw-watch').onclick=()=>{ if(cur.checked) return; watch(); writer.cancelQuiz(); writer.showOutline(); writer.animateCharacter({onComplete:()=>{ if(!trace) writer.hideOutline(); writer.hideCharacter(); quiz(); yourTurn(); }}); };
+  document.getElementById('hw-reset').onclick=()=>{ if(cur.checked) return; writer.cancelQuiz(); quiz(); msg.textContent=''; };
+  if(trace){ msg.textContent=''; writer.animateCharacter({onComplete:()=>{ writer.hideCharacter(); quiz(); yourTurn(); }}); }
+  else quiz();
+  const obs=new MutationObserver(()=>{ if(!document.body.contains(box)){ stopNudge(); obs.disconnect(); } }); obs.observe(stage,{childList:true});
+}
+
+/* ---------- Interaction ---------- */
+stage.addEventListener('click',e=>{
+  if(!Q||finished){ const sl=e.target.closest('[data-say-slow]'); if(sl){ say(sl.dataset.saySlow,.55); return; } const sy=e.target.closest('[data-say]'); if(sy) say(sy.dataset.say); return; }
+  const slow=e.target.closest('[data-say-slow]'); if(slow){ say(slow.dataset.saySlow,.55); return; }
+  const s=Q[qi];
+  const opt=e.target.closest('.opt');
+  if(opt&&!cur.checked){
+    cur.sel=+opt.dataset.i;
+    stage.querySelectorAll('.opt').forEach(b=>b.setAttribute('aria-pressed',b===opt));
+    if(s.t==='intro') say(cur.opts[cur.sel]);
+    enableCheck(true); return;
+  }
+  const tile=e.target.closest('.tile');
+  if(tile&&!cur.checked){
+    const i=+tile.dataset.i;
+    if(s.t==='gap'){
+      cur.sel=i; const slot=document.getElementById('slot');
+      slot.innerHTML=R(cur.opts[i],PY_READ[cur.opts[i]]); slot.classList.add('filled');
+      stage.querySelectorAll('.bank .tile').forEach(b=>b.classList.toggle('used',b===tile));
+      say(cur.opts[i]); enableCheck(true); return;
+    }
+    if(tile.closest('#answer')) cur.picked=cur.picked.filter(x=>x!==i);
+    else { cur.picked.push(i); if(s.t==='orderZh') say(cur.bank[i]); }
+    renderAnswer(); return;
+  }
+  const mt=e.target.closest('.mt');
+  if(mt&&!mt.classList.contains('done')&&!cur.checked){ onMatch(mt); if(mt.dataset.say) say(mt.dataset.say); return; }
+  if(e.target.closest('#mic')){ toggleRec(); return; }
+  const sayEl=e.target.closest('[data-say]'); if(sayEl) say(sayEl.dataset.say);
+});
+function renderAnswer(){
+  const s=Q[qi], isZh=s.t==='orderZh';
+  document.getElementById('answer').innerHTML=cur.picked.map(i=>`<button class="tile${isZh?' zh':''}" data-i="${i}">${isZh?R(cur.bank[i],PY_READ[cur.bank[i]]):cur.bank[i]}</button>`).join('');
+  stage.querySelectorAll('.bank .tile').forEach(b=>b.classList.toggle('used',cur.picked.includes(+b.dataset.i)));
+  enableCheck(cur.picked.length>0);
+}
+function onMatch(el){
+  const side=el.dataset.side, prev=stage.querySelector('.mt[aria-pressed="true"]');
+  if(!prev||prev.dataset.side===side){ stage.querySelectorAll('.mt').forEach(b=>b.setAttribute('aria-pressed',b===el&&prev!==el)); return; }
+  if(prev.dataset.i===el.dataset.i){
+    [prev,el].forEach(b=>{b.classList.add('done');b.setAttribute('aria-pressed','false');});
+    if(++cur.matched===Q[qi].pairs.length){
+      cur.checked=true;
+      RES[qi]=!cur.missed;
+      if(cur.missed){ requeue(); setFoot('ok','All matched. The ones you mixed up will come back.'); }
+      else setFoot('ok','All pairs matched.');
+      progress();
+    }
+  } else {
+    cur.missed=true;
+    [prev,el].forEach(b=>{b.classList.add('shake');b.setAttribute('aria-pressed','false');setTimeout(()=>b.classList.remove('shake'),450);});
+  }
+}
+
+/* ---------- Audio (device zh-TW voice) ---------- */
+const synth=window.speechSynthesis||null; let voice=null;
+function pickVoice(){
+  if(!synth) return; const vs=synth.getVoices();
+  const tw=vs.filter(v=>/zh[-_]TW/i.test(v.lang));
+  const pref=['Mei-Jia','美佳','HsiaoChen','曉臻','Hanhan','Yating','Google 國語'];
+  voice=tw.find(v=>pref.some(p=>v.name.includes(p)))||tw[0]||vs.find(v=>/^(zh|cmn)/i.test(v.lang))||null;
+}
+if(synth){ pickVoice(); synth.addEventListener?synth.addEventListener('voiceschanged',pickVoice):(synth.onvoiceschanged=pickVoice); }
+let warned=false;
+function say(text,rate){
+  if(!synth){ if(!warned){toast('Audio isn’t available in this browser.');warned=true;} return; }
+  synth.cancel(); const u=new SpeechSynthesisUtterance(text); u.lang='zh-TW'; u.rate=rate||TW.getRate(); if(voice) u.voice=voice; synth.speak(u);
+}
+function stopSpeaking(){ if(synth) synth.cancel(); }
+
+/* ---------- Speaking: browser speech recognition (Azure scoring comes later) ---------- */
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition; let rec=null;
+function stopRec(){ if(rec){ try{rec.abort()}catch(e){} rec=null; } }
+function speakFallback(msg){
+  const h=document.getElementById('heard'); if(h) h.innerHTML=msg;
+  cur.checked=true; setFoot('ok','Say it out loud a few times, copying the audio.');
+  document.querySelector('.foot .fb b').textContent='Practise out loud';
+}
+function toggleRec(){
+  const s=Q[qi], mic=document.getElementById('mic'), heard=document.getElementById('heard');
+  if(cur.checked) return;
+  if(rec){ stopRec(); mic.classList.remove('on'); return; }
+  if(!canListen()){ speakFallback(NO_REC); return; }
+  rec=new SR(); rec.lang='zh-TW'; rec.interimResults=false; rec.maxAlternatives=5;
+  mic.classList.add('on'); heard.textContent='Listening…';
+  let started=false; rec.onstart=()=>{ started=true; };
+  const watchdog=setTimeout(()=>{ if(!started&&rec){ stopRec(); mic.classList.remove('on'); speakFallback(NO_REC); } },3000);
+  rec.onresult=ev=>{
+    const alts=[...ev.results[0]].map(a=>a.transcript.replace(/[\s，。？！,.?!]/g,''));
+    const ok=alts.some(a=>a.includes(s.txt));
+    heard.innerHTML=`I heard: <b>${esc(alts[0]||'…')}</b>`;
+    rec=null; mic.classList.remove('on');
+    if(ok){ RES[qi]=true; cur.checked=true; setFoot('ok','Clear and recognisable.'); }
+    else heard.innerHTML+=`<br><span class="muted">Not quite ${s.txt}. Listen again and have another go.</span>`;
+  };
+  rec.onerror=ev=>{
+    mic.classList.remove('on'); rec=null;
+    if(['not-allowed','service-not-allowed','audio-capture'].includes(ev.error)){ clearTimeout(watchdog); speakFallback(NO_REC); }
+    else if(ev.error==='no-speech') heard.textContent='I didn’t hear anything. Tap and try again.';
+    else speakFallback('Speech recognition isn’t working here right now.');
+  };
+  rec.onend=()=>{ mic.classList.remove('on'); rec=null; };
+  try{ rec.start(); }catch(e){ clearTimeout(watchdog); speakFallback(NO_REC); }
+}
+
+/* ---------- Finish ---------- */
+function finish(){
+  finished=true; progress(); stopSpeaking(); const bk=document.getElementById('back'); if(bk) bk.hidden=true;
+  const vals=Object.values(RES), right=vals.filter(Boolean).length;
+  const acc=Math.round(100*right/Math.max(1,vals.length));
+  DONE[LID]={acc,at:Date.now()}; store.set('tw.lessons',DONE);
+  const l1=LID===1;
+  stage.innerHTML=`<div class="finish">
+    <div class="hero">${HELLO_ART}</div>
+    <div class="eyebrow">Lesson ${LID} complete · 第${l1?'一':'二'}課完成</div>
+    <h1>${l1?'You can hear the tones now':'You can say hello in Taiwan'}</h1>
+    <div class="stats">
+      <div class="stat"><b>${acc}%</b><span>accuracy</span></div>
+      <div class="stat"><b>${l1?5:VOCAB.length}</b><span>${l1?'tones':'new words'}</span></div>
+    </div>
+    ${l1?'':`<div class="learned">${VOCAB.map(k=>`<button class="chip" data-say="${k}">${W(k)}</button>`).join('')}</div><button class="link" data-save-all>Save all ${VOCAB.length} words to Saved Words</button>`}
+    <p class="muted">${l1?'Next: your first words, 你好 and 謝謝.':'Next up: a first short conversation with these words.'}</p>
+  </div>`;
+  foot.className='foot';
+  footIn.innerHTML=l1?`<button class="go" id="go">START LESSON 2</button>`:`<button class="go" id="go">BACK TO LESSONS</button>`;
+  document.getElementById('go').onclick=()=>l1?startLesson(2):home();
+}
+
+/* ---------- Reading-aid switch ---------- */
+function segHTML(){ return MODES.map(([id,zh,en])=>`<button data-mode="${id}" aria-pressed="${MODE===id}">${zh}<small>${en}</small></button>`).join(''); }
+function bindSegs(){ document.querySelectorAll('[data-seg]').forEach(el=>el.innerHTML=segHTML());
+  document.querySelectorAll('[data-theme-seg]').forEach(el=>el.innerHTML=TW.THEMES.map(([id,en])=>`<button data-th="${id}" aria-pressed="${TW.getTheme()===id}">${en}</button>`).join('')); }
+document.addEventListener('click',e=>{
+  const m=e.target.closest('[data-mode]'); if(m){ MODE=m.dataset.mode; store.set('tw.mode2',MODE); applyMode(); bindSegs(); return; }
+  if(e.target.closest('#mode-btn,[data-open-modes]')){ bindSegs(); sheet.hidden=false; scrim.hidden=false; return; }
+  const th=e.target.closest('[data-th]'); if(th){ TW.setTheme(th.dataset.th); bindSegs(); return; }
+  if(e.target.closest('#exit')){ home(); return; }
+  if(e.target.closest('#back')){ goBack(); }
+});
+const sheet=document.getElementById('sheet'), scrim=document.getElementById('scrim');
+const closeSheet=()=>{ sheet.hidden=true; scrim.hidden=true; };
+document.getElementById('sheet-done').onclick=closeSheet; scrim.onclick=closeSheet;
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeSheet(); });
+
+let toastT; function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.hidden=false; clearTimeout(toastT); toastT=setTimeout(()=>t.hidden=true,2200); }
+
+/* ---------- Shared app: Saved Words and settings kept in sync with Home and Stories ---------- */
+const lessonItem=k=>({k,py:V[k].py,en:V[k].en,pos:'',lvl:0,note:'',src:'lesson',ref:LID||2,title:'Lesson '+(LID||2)});
+function markSaved(){ document.querySelectorAll('[data-save]').forEach(b=>b.setAttribute('aria-pressed',TW.saved.has(b.dataset.save))); }
+document.addEventListener('click',e=>{
+  const sv=e.target.closest('[data-save]');
+  if(sv){ e.stopPropagation(); e.preventDefault(); const k=sv.dataset.save;
+    const on=TW.saved.toggle(lessonItem(k)); markSaved(); toast(on?`${k} added to Saved Words`:`${k} removed from Saved Words`); return; }
+  const all=e.target.closest('[data-save-all]');
+  if(all){ e.stopPropagation(); VOCAB.forEach(k=>{ if(!TW.saved.has(k)) TW.saved.add(lessonItem(k)); }); markSaved(); all.textContent='All saved ✓'; all.disabled=true; toast('Saved to Saved Words'); }
+},true);
+TW.onSync(()=>{ MODE=store.get('tw.mode2','py'); DONE=store.get('tw.lessons',{}); LEVEL=store.get('tw.level',null); applyMode(); bindSegs(); markSaved(); });
+BG?home():onboarding();
+</script>
+
+</body></html>
