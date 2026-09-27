@@ -18,12 +18,15 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@500;700&display=swap">
 <style>
+/* Curly quotes and apostrophes come from a Latin font, so they don't get full-width CJK spacing */
+@font-face{font-family:"LatinPunct";src:local("Helvetica Neue"),local("HelveticaNeue"),local("Helvetica"),local("Arial"),local("Segoe UI"),local("Roboto"),local("Noto Sans"),local("DejaVu Sans");unicode-range:U+2018-201F,U+2026}
+@font-face{font-family:"LatinPunctSerif";src:local("Georgia"),local("Times New Roman"),local("Times"),local("Noto Serif"),local("DejaVu Serif");unicode-range:U+2018-201F,U+2026}
 :root{
   --bg:#F2F5F3; --surface:#FFFFFF; --ink:#18201C; --muted:#5B6660; --line:#D6DDD8;
   --jade:#0D7A63; --jade-ink:#FFFFFF; --jade-soft:#DDF0E9;
   --amber:#B8600B; --amber-soft:#FBEAD6; --sel:#FFEFAE; --scrim:rgba(12,18,15,.42);
-  --sans:"Noto Sans TC",system-ui,-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;
-  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"LatinPunct","Noto Sans TC",system-ui,-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;
+  --serif:"LatinPunctSerif","Noto Serif TC","Songti TC","PMingLiU",serif;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
@@ -181,7 +184,7 @@ body.has-player{padding-bottom:110px}
   .seg button{padding:6px 8px}
 }
 
-/* merged app: home button, Saved link */
+/* merged app: back-to-app button, Saved link */
 .home-b{display:grid;place-items:center;width:34px;height:34px;margin-left:-6px;border-radius:10px;color:var(--ink);flex:none}
 .home-b svg{width:22px;height:22px}
 .home-b:hover{background:var(--surface)}
@@ -193,11 +196,11 @@ body.has-player{padding-bottom:110px}
 <body>
 <div class="app">
   <header class="top">
-    <a class="home-b" href="./" aria-label="Home" title="Home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11 12 4l8 7M6 9.5V20h4.5v-5.5h3V20H18V9.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    <a class="home-b" href="./#stories" aria-label="Back to the app" title="Back to the app"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11 12 4l8 7M6 9.5V20h4.5v-5.5h3V20H18V9.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     <div class="brand"><b>台灣華語</b><span>Graded stories</span></div>
     <nav class="tabs" aria-label="Sections">
       <button id="tab-stories" aria-pressed="true">Stories</button>
-      <a id="tab-saved" href="saved.html">Saved <span class="count" id="saved-count">0</span></a>
+      <a id="tab-saved" href="./#saved">Saved <span class="count" id="saved-count">0</span></a>
     </nav>
   </header>
   <main id="view"></main>
@@ -801,8 +804,7 @@ const isWord=k=>!!D[k];
 
 /* ---------- State ---------- */
 const store={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
-const Q0=new URLSearchParams(location.search);
-const S={view:'library',story:'mrt',mode:store.get('tw.mode2','py'),filter:Math.max(0,Math.min(5,+Q0.get('level')||0))};
+const S={view:'library',story:'mrt',mode:store.get('tw.mode2','py'),filter:0};
 const MODES=[['py','Pinyin','拼音'],['zy','Zhuyin','注音'],['all','Both','拼+注'],['hz','Hanzi','漢字']];
 
 /* ---------- Rendering helpers ---------- */
@@ -1007,10 +1009,9 @@ let toastT;
 function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.hidden=false; clearTimeout(toastT); toastT=setTimeout(()=>t.hidden=true,1800); }
 
 /* ---------- Events ---------- */
-function goLibrary(){ if(S.view==='reader'&&history.state&&history.state.tw){ history.back(); return; } stopPlayer(true); S.view='library'; history.replaceState(null,'',location.pathname+(S.filter?'?level='+S.filter:'')); render(); window.scrollTo(0,0); }
-function openStory(id,push){ stopPlayer(true); S.story=id; S.view='reader'; if(push) history.pushState({tw:1},'','?story='+id); render(); window.scrollTo(0,0); }
+let openedHere=false;
+function goLibrary(){ if(S.view==='reader'&&openedHere){ openedHere=false; history.back(); return; } stopPlayer(true); S.view='library'; history.replaceState(null,'',location.pathname); render(); window.scrollTo(0,0); }
 document.getElementById('tab-stories').onclick=goLibrary;
-window.addEventListener('popstate',()=>{ const id=new URLSearchParams(location.search).get('story'); if(id&&STORIES.some(s=>s.id===id)) openStory(id,false); else { stopPlayer(true); S.view='library'; render(); } });
 scrim.onclick=()=>{ if(Date.now()-lp.upAt<400) return; closeSheet(); }; document.getElementById('sheet-close').onclick=closeSheet;
 document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&!sheet.hidden) closeSheet(); });
 
@@ -1029,14 +1030,14 @@ document.addEventListener('click',e=>{
   if(b){
     if(b.dataset.mode){ S.mode=b.dataset.mode; store.set('tw.mode2',S.mode); render(); return; }
     if(b.dataset.go){ goLibrary(); return; }
-    if(b.dataset.open){ openStory(b.dataset.open,true); return; }
-    if(b.dataset.filter!=null){ S.filter=+b.dataset.filter; history.replaceState(null,'',location.pathname+(S.filter?'?level='+S.filter:'')); render(); return; }
+    if(b.dataset.open){ openedHere=true; location.hash=b.dataset.open; return; }
+    if(b.dataset.filter!=null){ S.filter=+b.dataset.filter; render(); return; }
     if(b.dataset.say){ speak(disp(b.dataset.say)); return; }
     if(b.dataset.sayText){ speak(b.dataset.sayText); return; }
     if(b.dataset.save){ const k=b.dataset.save;
       const st=STORIES.find(s=>s.id===S.story), d=D[k];
-      const on=TW.saved.toggle({k,py:d[0],en:d[1],pos:d[2],lvl:d[3],note:d[4]||'',src:'story',ref:S.story,title:st?st.zh:'',story:S.story});
-      toast(on?'Added to Saved Words':'Removed from Saved Words');
+      const on=TW.saved.toggle({k,py:d[0],en:d[1],pos:d[2],lvl:d[3],note:d[4]||'',from:'story',src:'story',ref:S.story,title:st?st.zh:'',story:S.story});
+      toast(on?'Added to Saved words':'Removed from Saved words');
       document.getElementById('saved-count').textContent=TW.saved.count();
       sheetBody.innerHTML=wordSheet(k); return; }
   }
@@ -1062,9 +1063,17 @@ document.addEventListener('pointermove',e=>{ if(lp.el&&Math.hypot(e.clientX-lp.x
 ['pointerup','pointercancel'].forEach(ev=>document.addEventListener(ev,()=>{ if(lp.fired){ lp.upAt=Date.now(); lp.fired=false; } cancelLp(); }));
 document.addEventListener('contextmenu',e=>{ if(e.target.closest('#story')) e.preventDefault(); });
 
-/* ---------- Shared app: settings and Saved Words kept in sync with Home and Lessons ---------- */
+/* Open the story named in the link, e.g. …#typhoon (used by the Lessons app's Stories tab) */
+function storyFromHash(){
+  const h=decodeURIComponent(location.hash.slice(1));
+  if(STORIES.some(st=>st.id===h)){ S.story=h; S.view='reader'; return true; }
+  if(h==='library'||!h){ S.view='library'; return true; }
+  return false;
+}
+storyFromHash();
+window.addEventListener('hashchange',()=>{ if(storyFromHash()){ stopPlayer(true); render(); window.scrollTo(0,0); } });
+/* ---------- Shared app: settings and Saved Words kept in sync with the rest of the app ---------- */
 TW.onSync(()=>{ S.mode=store.get('tw.mode2','py'); PL.rate=store.get('tw.rate',0.85); if(!PL.playing) render(); else document.getElementById('saved-count').textContent=TW.saved.count(); });
-{ const id=Q0.get('story'); if(id&&STORIES.some(s=>s.id===id)){ S.story=id; S.view='reader'; } }
 render();
 </script>
 
