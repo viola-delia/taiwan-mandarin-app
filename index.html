@@ -694,6 +694,11 @@ body.has-player{padding-bottom:220px}
 .seg.seg3{grid-template-columns:repeat(3,1fr)}
 /* Never wider than the screen: on phones a page that grows sideways makes Chrome enlarge the page area and push the bottom menu off screen */
 html,body{overflow-x:clip}
+/* App shell: the window never scrolls, only the content inside it does. Phone browsers then never slide their
+   address bar in and out, so the bottom menu stays exactly where it is. */
+html{height:100%;overflow:hidden}
+body{height:100%;overflow-y:auto;overflow-x:clip;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch}
+.meow{position:fixed}
 </style>
 </head>
 <body>
@@ -2086,7 +2091,7 @@ function onboarding(){
   document.getElementById('go').onclick=()=>{ BG=sel; store.set('tw.bg',BG); stage.onclick=null;
     if(BG==='new'){ if(DONE[1]) home(); else startLesson(1); }
     else if(BG==='mainland') primer(); else placementIntro(); };
-  window.scrollTo({top:0});
+  document.body.scrollTo({top:0});
 }
 let TAB='learn';
 const tabbar=document.getElementById('tabbar');
@@ -2152,14 +2157,14 @@ function home(tab,keepScroll){
   if(tab==='saved'){ tab='practice'; }
   if(tab) TAB=tab;
   if(!HOME[TAB]) TAB='learn';
-  const y=window.scrollY;
+  const y=document.body.scrollTop;
   stopSpeaking(); stopRec(); Q=null; P=null; PS=null; applyMode(); topHome(true); stage.onclick=null;
   foot.hidden=true; tabbar.hidden=false; renderTabbar();
   closeW(); if(TAB!=='stories'&&PL.playing) stopPlayer(true);
   stage.innerHTML=HOME[TAB]();
   if(TAB==='learn') requestAnimationFrame(drawRoad);
   syncPlayer();
-  window.scrollTo({top:keepScroll?y:0});
+  document.body.scrollTo({top:keepScroll?y:0});
 }
 const OFFS=[0,52,78,52,0,-52,-78,-52];
 /* The road: a smooth curve through every lesson, running on to the next level. The finished stretch is coloured. */
@@ -2588,7 +2593,7 @@ function primer(){
     </div>`;
   foot.className='foot'; footIn.innerHTML=`<button class="go" id="go">FIND MY LEVEL</button>`;
   document.getElementById('go').onclick=placementIntro;
-  window.scrollTo({top:0});
+  document.body.scrollTo({top:0});
 }
 
 /* ---------- Placement test: TOCFL words by level (checked against tocfl-202307.csv) ---------- */
@@ -2616,7 +2621,7 @@ function placementIntro(){
   document.getElementById('go').onclick=startPlacement;
   document.getElementById('pick-level').onclick=levelPicker;
   document.getElementById('from-start').onclick=()=>{ LEVEL=0; store.set('tw.level',0); startLesson(1); };
-  window.scrollTo({top:0});
+  document.body.scrollTo({top:0});
 }
 function startPlacement(){
   leaveHome();
@@ -2642,7 +2647,7 @@ function ptShow(){
   document.getElementById('go').onclick=()=>ptAnswer(P.opts[P.sel]===it[2]);
   document.getElementById('idk').onclick=()=>ptAnswer(false);
   if(listen) setTimeout(()=>say(it[0]),350);
-  window.scrollTo({top:0});
+  document.body.scrollTo({top:0});
 }
 stage.addEventListener('click',e=>{
   if(!P||Q) return;
@@ -2678,7 +2683,7 @@ function ptResult(){
   foot.className='foot'; footIn.innerHTML=`<button class="go" id="go">${beginner?'START LESSON 1':'CONTINUE'}</button>`;
   document.getElementById('go').onclick=()=>{ P=null; beginner?startLesson(1):home(); };
   document.getElementById('pick-level').onclick=levelPicker;
-  window.scrollTo({top:0});
+  document.body.scrollTo({top:0});
 }
 function levelPicker(){
   leaveHome();
@@ -2692,7 +2697,7 @@ function levelPicker(){
   foot.className='foot'; footIn.innerHTML=`<button class="go" id="go">SAVE</button>`;
   stage.onclick=e=>{ const b=e.target.closest('[data-lv]'); if(!b) return; sel=+b.dataset.lv; stage.querySelectorAll('[data-lv]').forEach(x=>x.setAttribute('aria-pressed',x===b)); };
   document.getElementById('go').onclick=()=>{ stage.onclick=null; LEVEL=sel; store.set('tw.level',LEVEL); sel===0&&!DONE[1]?startLesson(1):home(); };
-  window.scrollTo({top:0});
+  document.body.scrollTo({top:0});
 }
 
 /* ---------- Lesson engine ---------- */
@@ -2712,7 +2717,7 @@ function show(){
   if(['tone','orderZh','orderEn','intro'].includes(s.t)||(s.t==='mcq'&&s.say)||s.t==='role'||s.t==='lq'||s.t==='lz'||s.t==='hear') setTimeout(()=>say(s.t==='tone'?s.ch:s.t==='intro'?s.k:s.t==='role'?s.line:(s.t==='lq'||s.t==='lz')?s.it.zh:s.say),350);
   if(s.t==='learn'&&s.id==='ldlg') setTimeout(()=>playLines(s.L.lines),400);
   setFoot(CHECKED.includes(s.t)?'check':s.t==='match'?'match':s.t==='speak'?'speak':s.t==='write'?'write':'continue');
-  window.scrollTo({top:0});
+  document.body.scrollTo({top:0});
 }
 function setFoot(state,msg,quiet){
   foot.className='foot';
@@ -4509,7 +4514,7 @@ document.addEventListener('click',e=>{
   const c=e.target.closest('.cur-cat,.unit-art,.hero svg'); if(!c) return;
   c.classList.remove('jump'); void c.getBoundingClientRect(); c.classList.add('jump');
   const box=c.getBoundingClientRect(), b=document.createElement('span'); b.className='meow'; b.textContent='喵～';
-  b.style.left=(box.left+box.width/2+window.scrollX)+'px'; b.style.top=(box.top+window.scrollY)+'px'; document.body.appendChild(b);
+  b.style.left=(box.left+box.width/2)+'px'; b.style.top=box.top+'px'; document.body.appendChild(b);
   setTimeout(()=>{ b.remove(); c.classList.remove('jump'); },900);
   try{ say('喵'); }catch(_){}
 });
