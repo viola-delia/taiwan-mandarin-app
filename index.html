@@ -632,7 +632,7 @@ body.has-player{padding-bottom:220px}
 .nl-eb{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--jade);font-weight:700}
 .node-row:has(.done) .nl-eb{color:var(--amber)}
 .node-row:has(.current) .node-label{border-color:var(--jade);box-shadow:0 0 0 3px var(--jade-soft)}
-.node-row:has(.soon) .node-label{background:transparent;border-color:transparent;box-shadow:none;font-weight:500;color:var(--muted)}
+.node-row:has(.soon) .node-label{background:var(--bg);border-color:transparent;box-shadow:none;font-weight:500;color:var(--muted)}
 .deco{position:absolute;top:0;width:80px;height:80px;pointer-events:none;z-index:0;filter:drop-shadow(0 3px 5px rgba(0,0,0,.1))}
 .deco svg{display:block;width:100%;height:100%}
 .deco.left{right:calc(50% + 60px)}
@@ -699,6 +699,17 @@ html,body{overflow-x:clip}
 html{height:100%;overflow:hidden}
 body{height:100%;overflow-y:auto;overflow-x:clip;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch}
 .meow{position:fixed}
+.inst-steps{margin:0;padding-left:20px;display:grid;gap:6px;font-size:14px}
+.inst-ic{display:inline-grid;place-items:center;width:22px;height:22px;border:1px solid var(--line);border-radius:6px;vertical-align:-5px;color:var(--jade)}
+.inst-ic svg{width:15px;height:15px}
+/* Locked lessons: grey with a padlock until the lesson before is finished */
+.node.locked{background:var(--line);color:var(--muted);box-shadow:0 6px 0 color-mix(in srgb,var(--line) 70%,#000)}
+.node.locked::after{display:none}
+.node.locked.check{border-radius:24px}
+.node-row:has(.locked) .node-label{background:var(--bg);border-color:transparent;box-shadow:none;color:var(--muted)}
+.node-row:has(.locked) .nl-eb{color:var(--muted)}
+.node.shake{animation:nshake .4s}
+@keyframes nshake{20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
 </style>
 </head>
 <body>
@@ -922,6 +933,32 @@ const HELLO_ART=`<svg viewBox="0 0 440 200" role="img" aria-label="The leopard-c
 </svg>`;
 
 /* ---------- State ---------- */
+/* Add to home screen: the browser offers installation through this event (Android and desktop Chrome, Edge, Samsung Internet).
+   iPhone and iPad have no such event, so Settings shows the Share › Add to Home Screen steps instead. */
+let INSTALL_EVT=null;
+window.addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); INSTALL_EVT=e; });
+window.addEventListener('appinstalled',()=>{ INSTALL_EVT=null; try{ toast('Added to your home screen'); }catch(_){} });
+const isInstalled=()=>{ try{ return matchMedia('(display-mode: standalone)').matches||navigator.standalone===true; }catch(e){ return false; } };
+const isIOS=()=>/iPhone|iPad|iPod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+const canInstallHere=()=>!!document.querySelector('link[rel="manifest"]');
+function installSteps(){
+  if(isIOS()) return `<ol class="inst-steps"><li>Tap the <b>Share</b> button <span class="inst-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v12M8 7l4-4 4 4M6 11H5v10h14V11h-1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> in Safari’s toolbar.</li><li>Scroll down and tap <b>Add to Home Screen</b>.</li><li>Tap <b>Add</b>. The 台灣華語 icon appears on your home screen.</li></ol><p class="set-note">In Chrome on iPhone, the Share button is at the top right, next to the address bar.</p>`;
+  if(/Android/i.test(navigator.userAgent)) return `<ol class="inst-steps"><li>Tap the <b>⋮</b> menu at the top right of Chrome.</li><li>Tap <b>Add to home screen</b> (on some phones it says <b>Install app</b>).</li><li>Tap <b>Install</b> or <b>Add</b>.</li></ol>`;
+  return `<ol class="inst-steps"><li>In Chrome or Edge, click the <b>install</b> icon at the right end of the address bar.</li><li>Click <b>Install</b>.</li></ol><p class="set-note">On your phone, open this site in the browser and use Add to home screen.</p>`;
+}
+function installSection(){
+  let body;
+  if(isInstalled()) body=`<p class="set-note">✓ You’re using the app from your home screen.</p>`;
+  else if(!canInstallHere()) body=`<p class="set-note">This copy runs inside Claude. To put the app on your phone, open <b>https://viola-delia.github.io/taiwan-mandarin-app/</b> in your phone’s browser, then use this option there.</p>`;
+  else body=`<p class="set-note">Opens full screen like a normal app, with its own icon, and works offline.</p><button class="btn" id="inst-btn">${ICON_HOME_ADD} Add to home screen</button><div id="inst-box" class="stack"></div>`;
+  return `<div class="set-sec" style="border-top:1px solid var(--line);padding-top:12px"><b>Add to home screen</b>${body}</div>`;
+}
+const ICON_HOME_ADD='<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 8.5v7M8.5 12h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+async function doInstall(){
+  const box=document.getElementById('inst-box');
+  if(INSTALL_EVT){ const ev=INSTALL_EVT; INSTALL_EVT=null; try{ ev.prompt(); const r=await ev.userChoice; if(r&&r.outcome==='accepted'){ box.innerHTML='<p class="set-note">✓ Added. Look for 台灣華語 on your home screen.</p>'; return; } }catch(e){} }
+  box.innerHTML=installSteps();
+}
 const store={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 let MODE=store.get('tw.mode2','py');
 let BG=store.get('tw.bg',null);          // 'new' | 'mainland' | 'taiwan'
@@ -2196,13 +2233,13 @@ const HOME={
     const built=items.some(it=>it.id);
     const FLAG='<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" style="vertical-align:-2px;margin-right:4px"><path d="M5 21V4M5 4h12l-2.5 4L17 12H5" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>';
     const path=items.map((it,i)=>{
-      const st=it.id?(i===cur?'current':passed(it,i)?'done':'open'):'soon';
-      const icon=st==='done'?NODE_ICON.done:it.check?NODE_ICON.cup:st==='soon'?NODE_ICON.lock:NODE_ICON.star;
+      const st=it.id?(i===cur?'current':passed(it,i)?'done':'locked'):'soon';
+      const icon=st==='done'?NODE_ICON.done:(st==='soon'||st==='locked')?NODE_ICON.lock:it.check?NODE_ICON.cup:NODE_ICON.star;
       const part=i===cur&&PARTIAL[it.id]?Math.max(.06,PARTIAL[it.id].qi/PARTIAL[it.id].of):0;
       const bubble=st==='current'?`<span class="bubble">${FLAG}${part?'RESUME':'START'}</span>`:(cur<0&&i===firstSoon)?`<span class="bubble soon">${FLAG}COMING SOON</span>`:'';
       const num=it.id&&!it.check?`<span class="nl-eb">Lesson ${it.id}</span>`:it.check?'<span class="nl-eb">Checkpoint</span>':'';
       return `<div class="node-row${st==='current'?' is-current':''}${OFFS[i%8]>0?' on-right':''}" style="--x:${OFFS[i%8]}px">${st==='current'?'':decoFor(it,i)}${bubble}
-        <span class="nwrap">${part?`<span class="ring" style="--p:${Math.round(part*100)}%" role="img" aria-label="${Math.round(part*100)}% done"></span>`:''}<button class="node ${st}${it.check?' check':''}${part?' partial':''}" ${it.id?`data-lesson="${it.id}"`:'disabled'} aria-label="${esc(lessonTitle(it))}${st==='soon'?' (coming soon)':''}${part?`, ${Math.round(part*100)}% done`:''}">${icon}</button></span>
+        <span class="nwrap">${part?`<span class="ring" style="--p:${Math.round(part*100)}%" role="img" aria-label="${Math.round(part*100)}% done"></span>`:''}<button class="node ${st}${it.check?' check':''}${part?' partial':''}" ${st==='locked'?`data-locked="${it.id}"`:it.id?`data-lesson="${it.id}"`:'disabled'} aria-label="${esc(lessonTitle(it))}${st==='soon'?' (coming soon)':st==='locked'?' (locked)':''}${part?`, ${Math.round(part*100)}% done`:''}">${icon}</button></span>
         <span class="node-label">${num}${esc(lessonTitle(it))}</span>${st==='current'?`<svg class="cur-cat" viewBox="0 0 120 120" aria-hidden="true">${cat(60,68,1)}</svg>`:''}</div>`;
     }).join('');
     const next=lv<5?`<div class="unit next"><div><div class="eyebrow">Next · ${LEVELS[lv+1][1]} · ${LEVELS[lv+1][0]}</div><b>${ROADMAP[lv+1].unit}</b></div><span class="unit-lock">${NODE_ICON.lock}</span></div>`:'';
@@ -3156,6 +3193,7 @@ document.addEventListener('click',e=>{
   const fc=e.target.closest('[data-fc]'); if(fc){ startFlash(fc.dataset.fc); return; }
   const ln=e.target.closest('[data-learn]'); if(ln){ const st=setById(ln.dataset.learn); if(st) startLearn(st.items,st.title); return; }
   const mt=e.target.closest('[data-match]'); if(mt&&!mt.disabled){ startMatch(mt.dataset.match); return; }
+  const lk=e.target.closest('#stage [data-locked]'); if(lk&&!Q){ const need=[...stage.querySelectorAll('.node.current')][0]; const n=need&&need.dataset.lesson; toast(n?`Finish ${isNaN(n)?'the current lesson':'Lesson '+n} first to unlock this one`:'Finish the lessons before this one first'); lk.classList.remove('shake'); void lk.offsetWidth; lk.classList.add('shake'); return; }
   const ls=e.target.closest('#stage [data-lesson]'); if(ls&&!Q){ const v=ls.dataset.lesson; startLesson(isNaN(v)?v:+v); return; }
   if(e.target.closest('#exit')){ home(); return; }
   if(e.target.closest('#play-all')){ playAll(); return; }
@@ -3213,6 +3251,7 @@ function openSettings(){
     <div class="set-row"><b>Sound effects</b><button class="switch" id="sfx-sw" role="switch" aria-checked="${SFX}" aria-label="Sound effects"><i></i></button></div>
     <div class="set-row"><span><b>Extra space under the menu</b><br><span class="muted small">Turn on if your phone’s buttons cover the bottom menu</span></span><button class="switch" id="nav-sw" role="switch" aria-checked="${navFix()}" aria-label="Extra space under the menu"><i></i></button></div>
     ${onHome?`
+    ${installSection()}
     <div class="set-row"><span><b>Your background</b><br><span class="muted small">${bgName}</span></span><button class="link" id="change-bg">Change</button></div>
     <div class="set-sec" style="border-top:1px solid var(--line);padding-top:12px"><b>Backup and restore</b>
       <p class="set-note">Your progress is stored in this browser only. Clearing browser data or changing phone would lose it, so save a backup now and then.</p>
@@ -3229,6 +3268,7 @@ function openSettings(){
       </div></div>
     <div class="set-row"><span><b>Erase all progress</b><br><span class="muted small">Deletes your level, progress, saved words and study history on this device.</span></span><button class="link danger" id="reset">Erase</button></div>`:''}`;
   bindSegs(); sheet.hidden=false; scrim.hidden=false; document.documentElement.classList.add('sheet-open');
+  const ib=document.getElementById('inst-btn'); if(ib) ib.onclick=doInstall;
   const nsw=document.getElementById('nav-sw'); nsw.onclick=()=>{ const on=nsw.getAttribute('aria-checked')!=='true'; store.set('tw.navfix',on); navFix(); nsw.setAttribute('aria-checked',on); };
   const sw=document.getElementById('sfx-sw'); sw.onclick=()=>{ SFX=!SFX; store.set('tw.sfx',SFX); sw.setAttribute('aria-checked',SFX); if(SFX) sfx('ok'); };
   document.querySelectorAll('[data-rate]').forEach(b=>b.onclick=()=>{ RATE=+b.dataset.rate; store.set('tw.rate',RATE); document.querySelectorAll('[data-rate]').forEach(x=>x.setAttribute('aria-pressed',x===b)); say('你好，謝謝'); });
