@@ -26,7 +26,7 @@
     const dark = t==='dark' || (t==='auto' && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);
     let m = document.querySelector('meta[name="theme-color"]');
     if(!m){ m=document.createElement('meta'); m.name='theme-color'; document.head.appendChild(m); }
-    m.content = dark ? '#101412' : '#F2F5F3';
+    m.content = dark ? '#19130E' : '#F1E4D1';   // sand palette background
   };
   TW.setTheme = t => { store.set(KEYS.theme,t); TW.applyTheme(); };
   TW.applyTheme();   // runs in <head>, before the page is drawn, so there's no flash
