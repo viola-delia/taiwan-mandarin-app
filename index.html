@@ -57,7 +57,7 @@ button:focus-visible{outline:2px solid var(--jade);outline-offset:2px}
 .app{max-width:620px;margin-inline:auto}
 
 /* top bar */
-.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;align-items:center;gap:12px;padding-block:14px 12px}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;align-items:center;gap:12px;padding-block:14px 12px;margin-inline:-16px;padding-inline:16px}
 .icon-b{border:0;background:none;padding:4px;color:var(--muted);font-size:24px;line-height:1;width:32px}
 .brand{flex:1;display:flex;align-items:baseline;gap:8px}
 .brand b{font-family:var(--serif);font-size:20px;letter-spacing:.04em}
@@ -232,7 +232,7 @@ a.lcard{color:inherit;text-decoration:none}
 .speak-card .prompt-zh{font-size:54px;justify-content:center}
 
 /* footer */
-.foot{position:fixed;left:0;right:0;bottom:var(--vvb,0px);z-index:10;background:var(--surface);border-top:1px solid var(--line);padding:14px 16px calc(16px + var(--sab))}
+.foot{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--surface);border-top:1px solid var(--line);padding:14px 16px calc(16px + var(--sab))}
 .foot.ok{background:var(--jade-soft);border-color:transparent}
 .foot.no{background:var(--bad-soft);border-color:transparent}
 .foot.shown{background:var(--amber-soft);border-color:transparent}
@@ -386,7 +386,7 @@ a.go{display:block;text-align:center;text-decoration:none}
 .unit.next{position:relative;z-index:1;background:var(--surface);color:var(--muted);border:1px dashed var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}
 .unit.next .eyebrow{color:var(--muted)}
 .unit-lock svg{width:22px;height:22px}
-.path{position:relative;display:grid;gap:22px;justify-items:center;padding-block:14px 20px}
+.path{position:relative;display:grid;gap:22px;justify-items:center;padding-block:14px 20px;margin-inline:-16px;padding-inline:16px;overflow-x:hidden;overflow-x:clip}
 .node-row{display:grid;justify-items:center;gap:4px;transform:translateX(var(--x));position:relative}
 .node{width:70px;height:70px;border-radius:50%;border:0;display:grid;place-items:center;background:var(--jade);color:var(--jade-ink);box-shadow:0 6px 0 color-mix(in srgb,var(--jade) 55%,#000)}
 .node svg{width:30px;height:30px}
@@ -413,7 +413,7 @@ a.go{display:block;text-align:center;text-decoration:none}
 @media (max-width:420px){.path-cat{width:76px;height:76px;left:0}}
 
 /* tab bar */
-.tabbar{position:fixed;left:0;right:0;bottom:var(--vvb,0px);transform:translateZ(0);z-index:10;background:var(--surface);border-top:1px solid var(--line);padding:6px 8px calc(6px + var(--sab))}
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--surface);border-top:1px solid var(--line);padding:6px 8px calc(6px + var(--sab))}
 .tab-in{max-width:620px;margin-inline:auto;display:grid;grid-template-columns:repeat(5,1fr)}
 .tabbar button{border:0;background:none;display:grid;justify-items:center;gap:2px;padding:6px 2px;border-radius:12px;color:var(--muted);font-size:11px;font-weight:500}
 .tabbar svg{width:24px;height:24px}
@@ -475,7 +475,7 @@ html.sheet-open,html.sheet-open body{overflow:hidden}
 
 /* sheet */
 .scrim{position:fixed;inset:0;background:var(--scrim);z-index:20}
-.sheet{position:fixed;left:0;right:0;bottom:var(--vvb,0px);z-index:21;margin-inline:auto;max-width:620px;background:var(--surface);border-radius:18px 18px 0 0;border:1px solid var(--line);border-bottom:0;padding:18px 20px calc(22px + var(--sab));display:grid;gap:12px}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:21;margin-inline:auto;max-width:620px;background:var(--surface);border-radius:18px 18px 0 0;border:1px solid var(--line);border-bottom:0;padding:18px 20px calc(22px + var(--sab));display:grid;gap:12px}
 .toast{position:fixed;left:50%;top:70px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:10px;font-size:13.5px;z-index:30;max-width:calc(100% - 32px)}
 @media (max-width:400px){.opt .pic{width:72px;height:72px}.wlist{grid-template-columns:repeat(2,1fr)}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -518,7 +518,7 @@ html.sheet-open,html.sheet-open body{overflow:hidden}
 .wnote{font-size:13.5px;color:var(--muted);background:var(--bg);border-radius:10px;padding:10px 12px;margin:0}
 .sent-zh{font-family:var(--serif);font-size:22px;line-height:1.6;margin:0}
 .sent-en{font-size:17px;margin:0 0 8px}
-.player{position:fixed;left:0;right:0;bottom:calc(62px + var(--sab) + var(--vvb,0px));z-index:9;background:var(--surface);border-top:1px solid var(--line);padding:8px 16px;box-shadow:0 -6px 24px rgba(0,0,0,.06)}
+.player{position:fixed;left:0;right:0;bottom:calc(62px + var(--sab));z-index:9;background:var(--surface);border-top:1px solid var(--line);padding:8px 16px;box-shadow:0 -6px 24px rgba(0,0,0,.06)}
 .player-in{max-width:620px;margin-inline:auto;display:flex;align-items:center;gap:12px}
 .pl-btns{display:flex;align-items:center;gap:4px}
 .pl-b{border:0;background:none;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:var(--ink)}
@@ -615,7 +615,7 @@ body.has-player{padding-bottom:220px}
 .unit.next{background:var(--surface);color:var(--muted);box-shadow:none;min-height:0}
 .unit.next>*{max-width:none}
 .path{gap:30px;padding-block:24px 28px}
-.path::before{content:"";position:absolute;inset:0 -16px;pointer-events:none;background:
+.path::before{content:"";position:absolute;inset:0;pointer-events:none;background:
   radial-gradient(circle at 10% 16%,color-mix(in srgb,var(--jade) 8%,transparent) 0 58px,transparent 59px),
   radial-gradient(circle at 92% 44%,color-mix(in srgb,var(--amber) 8%,transparent) 0 70px,transparent 71px),
   radial-gradient(circle at 12% 74%,color-mix(in srgb,var(--jade) 8%,transparent) 0 64px,transparent 65px)}
@@ -666,7 +666,7 @@ body.has-player{padding-bottom:220px}
 .meow{position:absolute;z-index:40;transform:translate(-50%,-100%);background:var(--surface);color:var(--ink);border:2px solid var(--line);border-radius:12px;padding:3px 10px;font-weight:700;font-size:15px;pointer-events:none;animation:meow .9s ease-out forwards}
 @keyframes meow{0%{opacity:0;transform:translate(-50%,-80%) scale(.6)}25%{opacity:1;transform:translate(-50%,-110%) scale(1)}100%{opacity:0;transform:translate(-50%,-160%)}}
 /* Path scenery */
-.scenery{position:absolute;inset:0 -16px;pointer-events:none;z-index:0}
+.scenery{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden}
 .sc-tree{position:absolute;width:34px;height:42px}
 .sc-tree.l{left:6px}.sc-tree.r{right:6px}
 .sc-tree svg{width:100%;height:100%}
@@ -692,6 +692,8 @@ body.has-player{padding-bottom:220px}
 
 /* merged app */
 .seg.seg3{grid-template-columns:repeat(3,1fr)}
+/* Never wider than the screen: on phones a page that grows sideways makes Chrome enlarge the page area and push the bottom menu off screen */
+html,body{overflow-x:clip}
 </style>
 </head>
 <body>
@@ -3204,7 +3206,7 @@ function openSettings(){
       <div class="seg two"><button data-rate=".6" aria-pressed="${RATE<.7}">Slow</button><button data-rate=".8" aria-pressed="${RATE>=.7}">Normal</button></div>
       <p class="set-note">Uses your device’s Taiwan (zh-TW) voice. More natural voices are planned.</p></div>
     <div class="set-row"><b>Sound effects</b><button class="switch" id="sfx-sw" role="switch" aria-checked="${SFX}" aria-label="Sound effects"><i></i></button></div>
-    <div class="set-row"><span><b>Extra space under the menu</b><br><span class="muted small">Turn on if your phone’s buttons cover the bottom menu</span><br><span class="muted small" style="font-size:11px">Screen check: ${screenInfo()}</span></span><button class="switch" id="nav-sw" role="switch" aria-checked="${navFix()}" aria-label="Extra space under the menu"><i></i></button></div>
+    <div class="set-row"><span><b>Extra space under the menu</b><br><span class="muted small">Turn on if your phone’s buttons cover the bottom menu</span></span><button class="switch" id="nav-sw" role="switch" aria-checked="${navFix()}" aria-label="Extra space under the menu"><i></i></button></div>
     ${onHome?`
     <div class="set-row"><span><b>Your background</b><br><span class="muted small">${bgName}</span></span><button class="link" id="change-bg">Change</button></div>
     <div class="set-sec" style="border-top:1px solid var(--line);padding-top:12px"><b>Backup and restore</b>
@@ -4513,8 +4515,6 @@ document.addEventListener('click',e=>{
 });
 /* Some Android phones draw the page under their navigation buttons without telling the page (safe area = 0), which hides the bottom menu.
    Auto: on Android, when the page reaches the very bottom of the screen and no safe area is reported, add 48px. Settings can force it on or off. */
-function screenInfo(){ const vv=window.visualViewport; const pr=document.createElement('div'); pr.style.cssText='position:fixed;bottom:0;height:env(safe-area-inset-bottom,0px);visibility:hidden'; document.body.appendChild(pr); const sa=Math.round(pr.getBoundingClientRect().height); pr.remove();
-  return `screen ${screen.width}×${screen.height} · page ${window.innerWidth}×${window.innerHeight} · visible ${vv?Math.round(vv.height):'?'} · safe area ${sa} · lift ${getComputedStyle(document.documentElement).getPropertyValue('--vvb')||'0px'}`; }
 function navFix(){
   let mode=null; try{ mode=JSON.parse(localStorage.getItem('tw.navfix')); }catch(e){}
   let need=false;
@@ -4531,16 +4531,6 @@ function navFix(){
 }
 let NAVFIX_ON=false;
 navFix(); window.addEventListener('resize',()=>{ if(!NAVFIX_ON) navFix(); });
-/* Keep bottom bars on the visible part of the screen. When the phone or the app viewer makes the page taller than what is
-   actually visible (toolbars hiding, the viewer resizing), fixed bars would slide off the bottom; this lifts them back up. */
-function pinBars(){
-  const vv=window.visualViewport; if(!vv) return;
-  const gap=Math.max(0,Math.round(window.innerHeight-(vv.height+vv.offsetTop)));
-  document.documentElement.style.setProperty('--vvb',gap+'px');
-}
-/* Only on real size changes, never while scrolling or while a panel is open, so nothing jumps around */
-if(window.visualViewport) visualViewport.addEventListener('resize',()=>{ if(!document.documentElement.classList.contains('sheet-open')) pinBars(); });
-window.addEventListener('resize',()=>{ if(!document.documentElement.classList.contains('sheet-open')) pinBars(); }); pinBars();
 let toastT; function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.hidden=false; clearTimeout(toastT); toastT=setTimeout(()=>t.hidden=true,2200); }
 
 /* ---------- Installed app: theme switch and links that open a tab or a story ---------- */
