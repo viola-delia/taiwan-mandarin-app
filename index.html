@@ -232,7 +232,7 @@ a.lcard{color:inherit;text-decoration:none}
 .speak-card .prompt-zh{font-size:54px;justify-content:center}
 
 /* footer */
-.foot{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--surface);border-top:1px solid var(--line);padding:14px 16px calc(16px + env(safe-area-inset-bottom,0px))}
+.foot{position:fixed;left:0;right:0;bottom:var(--vvb,0px);z-index:10;background:var(--surface);border-top:1px solid var(--line);padding:14px 16px calc(16px + var(--sab))}
 .foot.ok{background:var(--jade-soft);border-color:transparent}
 .foot.no{background:var(--bad-soft);border-color:transparent}
 .foot.shown{background:var(--amber-soft);border-color:transparent}
@@ -413,7 +413,7 @@ a.go{display:block;text-align:center;text-decoration:none}
 @media (max-width:420px){.path-cat{width:76px;height:76px;left:0}}
 
 /* tab bar */
-.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--surface);border-top:1px solid var(--line);padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px))}
+.tabbar{position:fixed;left:0;right:0;bottom:var(--vvb,0px);transform:translateZ(0);z-index:10;background:var(--surface);border-top:1px solid var(--line);padding:6px 8px calc(6px + var(--sab))}
 .tab-in{max-width:620px;margin-inline:auto;display:grid;grid-template-columns:repeat(5,1fr)}
 .tabbar button{border:0;background:none;display:grid;justify-items:center;gap:2px;padding:6px 2px;border-radius:12px;color:var(--muted);font-size:11px;font-weight:500}
 .tabbar svg{width:24px;height:24px}
@@ -458,7 +458,8 @@ a.go{display:block;text-align:center;text-decoration:none}
 .switch i{position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
 .switch[aria-checked="true"]{background:var(--jade)}
 .switch[aria-checked="true"] i{transform:translateX(20px)}
-.sheet{max-height:85vh;overflow:auto}
+.sheet{max-height:85vh;max-height:85svh;overflow:auto;overscroll-behavior:contain}
+html.sheet-open,html.sheet-open body{overflow:hidden}
 
 /* speaker cue on anything that plays audio */
 :root{--spk-icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 9v6h4l5 4V5L8 9z' fill='black'/%3E%3Cpath d='M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E")}
@@ -474,7 +475,7 @@ a.go{display:block;text-align:center;text-decoration:none}
 
 /* sheet */
 .scrim{position:fixed;inset:0;background:var(--scrim);z-index:20}
-.sheet{position:fixed;left:0;right:0;bottom:0;z-index:21;margin-inline:auto;max-width:620px;background:var(--surface);border-radius:18px 18px 0 0;border:1px solid var(--line);border-bottom:0;padding:18px 20px calc(22px + env(safe-area-inset-bottom,0px));display:grid;gap:12px}
+.sheet{position:fixed;left:0;right:0;bottom:var(--vvb,0px);z-index:21;margin-inline:auto;max-width:620px;background:var(--surface);border-radius:18px 18px 0 0;border:1px solid var(--line);border-bottom:0;padding:18px 20px calc(22px + var(--sab));display:grid;gap:12px}
 .toast{position:fixed;left:50%;top:70px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:10px;font-size:13.5px;z-index:30;max-width:calc(100% - 32px)}
 @media (max-width:400px){.opt .pic{width:72px;height:72px}.wlist{grid-template-columns:repeat(2,1fr)}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -517,7 +518,7 @@ a.go{display:block;text-align:center;text-decoration:none}
 .wnote{font-size:13.5px;color:var(--muted);background:var(--bg);border-radius:10px;padding:10px 12px;margin:0}
 .sent-zh{font-family:var(--serif);font-size:22px;line-height:1.6;margin:0}
 .sent-en{font-size:17px;margin:0 0 8px}
-.player{position:fixed;left:0;right:0;bottom:calc(62px + env(safe-area-inset-bottom,0px));z-index:9;background:var(--surface);border-top:1px solid var(--line);padding:8px 16px;box-shadow:0 -6px 24px rgba(0,0,0,.06)}
+.player{position:fixed;left:0;right:0;bottom:calc(62px + var(--sab) + var(--vvb,0px));z-index:9;background:var(--surface);border-top:1px solid var(--line);padding:8px 16px;box-shadow:0 -6px 24px rgba(0,0,0,.06)}
 .player-in{max-width:620px;margin-inline:auto;display:flex;align-items:center;gap:12px}
 .pl-btns{display:flex;align-items:center;gap:4px}
 .pl-b{border:0;background:none;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:var(--ink)}
@@ -686,6 +687,8 @@ body.has-player{padding-bottom:220px}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#19130E;--surface:#231B14;--ink:#F1E7DC;--muted:#B3A391;--line:#3B2F24;--jade:#5CB3EA;--jade-ink:#06121B;--jade-soft:#16324A;--amber:#F2B84B;--amber-soft:#3A2C12;--pic-bg:#2A2119;--hero-a:#2F79A8;--hero-b:#23648F;--hero-c:#194C70;--hero-prog:#FFC94A;--hero-ink:#FFFFFF;--hill:#2C2219;--cloud:#2E251C}}
 :root[data-theme="dark"]{--bg:#19130E;--surface:#231B14;--ink:#F1E7DC;--muted:#B3A391;--line:#3B2F24;--jade:#5CB3EA;--jade-ink:#06121B;--jade-soft:#16324A;--amber:#F2B84B;--amber-soft:#3A2C12;--pic-bg:#2A2119;--hero-a:#2F79A8;--hero-b:#23648F;--hero-c:#194C70;--hero-prog:#FFC94A;--hero-ink:#FFFFFF;--hill:#2C2219;--cloud:#2E251C}
 .unit-art .sky-sun{opacity:.9}
+/* Space under bottom bars: the phone's reported safe area, or a fallback when an Android phone's buttons cover the page without reporting it */
+:root{--sab:max(env(safe-area-inset-bottom,0px),var(--navfix,0px))}
 
 /* merged app */
 .seg.seg3{grid-template-columns:repeat(3,1fr)}
@@ -916,7 +919,7 @@ const store={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.
 let MODE=store.get('tw.mode2','py');
 let BG=store.get('tw.bg',null);          // 'new' | 'mainland' | 'taiwan'
 let DONE=store.get('tw.lessons',{});
-const MODES=[['py','拼音','Pinyin'],['zy','注音','Zhuyin'],['all','拼+注','Both'],['hz','漢字','Hanzi']];
+const MODES=[['py','拼音','Pinyin'],['zy','注音','Zhuyin'],['all','拼+注','Both'],['hz','漢字','Characters']];
 const BGS=[
   ['new','I’m completely new','Start from the very beginning'],
   ['mainland','I’ve studied Mainland Chinese','Simplified characters, Mainland words'],
@@ -3159,7 +3162,7 @@ document.addEventListener('input',e=>{
   stage.querySelectorAll('.saved-list .sw').forEach(r=>r.hidden=q&&!r.dataset.find.includes(q));
 });
 const sheet=document.getElementById('sheet'), scrim=document.getElementById('scrim');
-const TW_KEYS=['tw.pdone','tw.bg','tw.level','tw.lessons','tw.mode2','tw.saved','tw.sfx','tw.partial','tw.mem','tw.best','tw.fcfront','tw.gram','tw.act','tw.goal','tw.stories','tw.rate','tw.srate'];
+const TW_KEYS=['tw.pdone','tw.bg','tw.level','tw.lessons','tw.mode2','tw.saved','tw.sfx','tw.partial','tw.mem','tw.best','tw.fcfront','tw.gram','tw.act','tw.goal','tw.stories','tw.rate','tw.srate','tw.navfix'];
 function reloadState(){
   MODE=store.get('tw.mode2','py'); BG=store.get('tw.bg',null); DONE=store.get('tw.lessons',{}); LEVEL=store.get('tw.level',null);
   SAVED=store.get('tw.saved',[]); PARTIAL=store.get('tw.partial',{}); MEM=store.get('tw.mem',{}); SFX=store.get('tw.sfx',true);
@@ -3201,6 +3204,7 @@ function openSettings(){
       <div class="seg two"><button data-rate=".6" aria-pressed="${RATE<.7}">Slow</button><button data-rate=".8" aria-pressed="${RATE>=.7}">Normal</button></div>
       <p class="set-note">Uses your device’s Taiwan (zh-TW) voice. More natural voices are planned.</p></div>
     <div class="set-row"><b>Sound effects</b><button class="switch" id="sfx-sw" role="switch" aria-checked="${SFX}" aria-label="Sound effects"><i></i></button></div>
+    <div class="set-row"><span><b>Extra space under the menu</b><br><span class="muted small">Turn on if your phone’s buttons cover the bottom menu</span><br><span class="muted small" style="font-size:11px">Screen check: ${screenInfo()}</span></span><button class="switch" id="nav-sw" role="switch" aria-checked="${navFix()}" aria-label="Extra space under the menu"><i></i></button></div>
     ${onHome?`
     <div class="set-row"><span><b>Your background</b><br><span class="muted small">${bgName}</span></span><button class="link" id="change-bg">Change</button></div>
     <div class="set-sec" style="border-top:1px solid var(--line);padding-top:12px"><b>Backup and restore</b>
@@ -3217,7 +3221,8 @@ function openSettings(){
         <span>The leopard-cat mascot and all illustrations are original to this app.</span>
       </div></div>
     <div class="set-row"><span><b>Erase all progress</b><br><span class="muted small">Deletes your level, progress, saved words and study history on this device.</span></span><button class="link danger" id="reset">Erase</button></div>`:''}`;
-  bindSegs(); sheet.hidden=false; scrim.hidden=false;
+  bindSegs(); sheet.hidden=false; scrim.hidden=false; document.documentElement.classList.add('sheet-open');
+  const nsw=document.getElementById('nav-sw'); nsw.onclick=()=>{ const on=nsw.getAttribute('aria-checked')!=='true'; store.set('tw.navfix',on); navFix(); nsw.setAttribute('aria-checked',on); };
   const sw=document.getElementById('sfx-sw'); sw.onclick=()=>{ SFX=!SFX; store.set('tw.sfx',SFX); sw.setAttribute('aria-checked',SFX); if(SFX) sfx('ok'); };
   document.querySelectorAll('[data-rate]').forEach(b=>b.onclick=()=>{ RATE=+b.dataset.rate; store.set('tw.rate',RATE); document.querySelectorAll('[data-rate]').forEach(x=>x.setAttribute('aria-pressed',x===b)); say('你好，謝謝'); });
   const on=(id,fn)=>{ const el=document.getElementById(id); if(el) el.onclick=()=>{ closeSheet(); fn(); }; };
@@ -3236,7 +3241,7 @@ function openSettings(){
     reloadState(); TAB='learn'; closeSheet(); onboarding();
   };
 }
-const closeSheet=()=>{ sheet.hidden=true; scrim.hidden=true; };
+const closeSheet=()=>{ sheet.hidden=true; scrim.hidden=true; document.documentElement.classList.remove('sheet-open'); };
 document.getElementById('sheet-done').onclick=closeSheet; scrim.onclick=closeSheet;
 document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeSheet(); });
 
@@ -4411,8 +4416,8 @@ function storyView(){
 }
 /* word and sentence pop-ups */
 const wsheet=document.getElementById('wsheet'), wscrim=document.getElementById('wscrim'), wbody=document.getElementById('wsheet-body');
-function openW(html){ wbody.innerHTML=html; wsheet.hidden=false; wscrim.hidden=false; }
-function closeW(){ wsheet.hidden=true; wscrim.hidden=true; document.querySelectorAll('.w.on,.sent.on').forEach(e=>e.classList.remove('on')); }
+function openW(html){ wbody.innerHTML=html; wsheet.hidden=false; wscrim.hidden=false; document.documentElement.classList.add('sheet-open'); }
+function closeW(){ wsheet.hidden=true; wscrim.hidden=true; if(sheet.hidden) document.documentElement.classList.remove('sheet-open'); document.querySelectorAll('.w.on,.sent.on').forEach(e=>e.classList.remove('on')); }
 function wordSheet(k){
   const [py,en,pos,lvl,note,tw]=RD.D[k], st=RD.STORIES.find(s=>s.id===STORY_ID), up=st&&lvl>st.lvl, d=RD.disp(k);
   return `<div class="eyebrow">Word</div>
@@ -4506,6 +4511,36 @@ document.addEventListener('click',e=>{
   setTimeout(()=>{ b.remove(); c.classList.remove('jump'); },900);
   try{ say('喵'); }catch(_){}
 });
+/* Some Android phones draw the page under their navigation buttons without telling the page (safe area = 0), which hides the bottom menu.
+   Auto: on Android, when the page reaches the very bottom of the screen and no safe area is reported, add 48px. Settings can force it on or off. */
+function screenInfo(){ const vv=window.visualViewport; const pr=document.createElement('div'); pr.style.cssText='position:fixed;bottom:0;height:env(safe-area-inset-bottom,0px);visibility:hidden'; document.body.appendChild(pr); const sa=Math.round(pr.getBoundingClientRect().height); pr.remove();
+  return `screen ${screen.width}×${screen.height} · page ${window.innerWidth}×${window.innerHeight} · visible ${vv?Math.round(vv.height):'?'} · safe area ${sa} · lift ${getComputedStyle(document.documentElement).getPropertyValue('--vvb')||'0px'}`; }
+function navFix(){
+  let mode=null; try{ mode=JSON.parse(localStorage.getItem('tw.navfix')); }catch(e){}
+  let need=false;
+  if(mode===true) need=true;
+  else if(mode===null){
+    const probe=document.createElement('div'); probe.style.cssText='position:fixed;bottom:0;height:env(safe-area-inset-bottom,0px);visibility:hidden;pointer-events:none';
+    document.body.appendChild(probe); const inset=probe.getBoundingClientRect().height; probe.remove();
+    const vh=(window.visualViewport&&window.visualViewport.height)||window.innerHeight;
+    need=/Android/i.test(navigator.userAgent)&&inset<1&&vh>=screen.height-4;
+  }
+  if(need&&mode===null) NAVFIX_ON=true;
+  document.documentElement.style.setProperty('--navfix',need?'48px':'0px');
+  return need;
+}
+let NAVFIX_ON=false;
+navFix(); window.addEventListener('resize',()=>{ if(!NAVFIX_ON) navFix(); });
+/* Keep bottom bars on the visible part of the screen. When the phone or the app viewer makes the page taller than what is
+   actually visible (toolbars hiding, the viewer resizing), fixed bars would slide off the bottom; this lifts them back up. */
+function pinBars(){
+  const vv=window.visualViewport; if(!vv) return;
+  const gap=Math.max(0,Math.round(window.innerHeight-(vv.height+vv.offsetTop)));
+  document.documentElement.style.setProperty('--vvb',gap+'px');
+}
+/* Only on real size changes, never while scrolling or while a panel is open, so nothing jumps around */
+if(window.visualViewport) visualViewport.addEventListener('resize',()=>{ if(!document.documentElement.classList.contains('sheet-open')) pinBars(); });
+window.addEventListener('resize',()=>{ if(!document.documentElement.classList.contains('sheet-open')) pinBars(); }); pinBars();
 let toastT; function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.hidden=false; clearTimeout(toastT); toastT=setTimeout(()=>t.hidden=true,2200); }
 
 /* ---------- Installed app: theme switch and links that open a tab or a story ---------- */

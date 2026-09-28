@@ -20,4 +20,4 @@ Everything is stored in the browser on each device (keys starting with `tw.`). U
 
 ## Updating the app
 
-Replace the changed files on GitHub. If you add or rename a file, add it to the list at the top of `sw.js` and raise the version number (currently `tw-v4`) so phones pick up the new version.
+Replace the changed files on GitHub. If you add or rename a file, add it to the list at the top of `sw.js` and raise the version number (currently `tw-v5`) so phones pick up the new version.
