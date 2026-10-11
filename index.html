@@ -689,6 +689,9 @@ body.has-player{padding-bottom:220px}
 .unit-art .sky-sun{opacity:.9}
 /* Space under bottom bars: the phone's reported safe area, or a fallback when an Android phone's buttons cover the page without reporting it */
 :root{--sab:max(env(safe-area-inset-bottom,0px),var(--navfix,0px))}
+
+/* merged app */
+.seg.seg3{grid-template-columns:repeat(3,1fr)}
 /* Never wider than the screen: on phones a page that grows sideways makes Chrome enlarge the page area and push the bottom menu off screen */
 html,body{overflow-x:clip}
 /* App shell: the window never scrolls, only the content inside it does. Phone browsers then never slide their
@@ -707,9 +710,7 @@ body{height:100%;overflow-y:auto;overflow-x:clip;overscroll-behavior-y:contain;-
 .node-row:has(.locked) .nl-eb{color:var(--muted)}
 .node.shake{animation:nshake .4s}
 @keyframes nshake{20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
-
-/* merged app */
-.seg.seg3{grid-template-columns:repeat(3,1fr)}
+.unit-chips{margin-bottom:-4px}.unit-chips small{font-size:11px;font-weight:400}
 </style>
 </head>
 <body>
@@ -2360,7 +2361,7 @@ window.addEventListener('resize',()=>{ if(!tabbar.hidden&&TAB==='learn') drawRoa
 const lessonTitle=it=>it.id?LESSONS[it.id].title:it.t;
 const HOME={
   learn:()=>{
-    const lv=LEVEL==null?0:LEVEL, R_=ROADMAP[lv], items=R_.items;
+    const my=LEVEL==null?0:LEVEL, lv=LEARN_LV==null?my:LEARN_LV, R_=ROADMAP[lv], items=R_.items;
     /* The flag marks where the learner is: a lesson left half-way (RESUME) or the next lesson after the furthest one
        finished (START). Every lesson before the flag shows as done with a tick, like on Duolingo. */
     const lastDone=items.reduce((m,it,i)=>it.id&&DONE[it.id]?i:m,-1);
@@ -2384,6 +2385,7 @@ const HOME={
     }).join('');
     const next=lv<5?`<div class="unit next"><div><div class="eyebrow">Next · ${LEVELS[lv+1][1]} · ${LEVELS[lv+1][0]}</div><b>${ROADMAP[lv+1].unit}</b></div><span class="unit-lock">${NODE_ICON.lock}</span></div>`:'';
     return `
+      <div class="chips unit-chips" role="group" aria-label="Unit">${[0,1,2,3,4,5].map(l=>`<button class="chip-l" data-llv="${l}" aria-pressed="${l===lv}">${LEVELS[l][1]}${l===my?'<i class="mine-dot" title="Your level"></i>':''}${ROADMAP[l].items.some(it=>it.id)?'':' <small class="muted">soon</small>'}</button>`).join('')}</div>
       <div class="unit">${UNIT_ART}
         <div class="eyebrow unit-eb">${LEVELS[lv][1]} · ${LEVELS[lv][0]} · ${LEVELS[lv][2]}</div>
         <h2>${R_.unit}</h2>
@@ -2495,6 +2497,7 @@ const HOME={
     <div class="scen">${Object.entries(SCENES).filter(([,S_])=>S_.lvl===l).map(([id,S_])=>`<button class="sc ready${DONE[id]?' done':''}" data-lesson="${id}"><span class="sc-ic">${S_.ic}</span><span class="info"><b>${S_.title}</b><small><span class="zh-s">${S_.zh}</span> · ${S_.desc} · ${S_.mins} min</small></span><span class="sc-lv go-lv">${DONE[id]?'✓ PLAY AGAIN':PARTIAL[id]?'CONTINUE':'START'}</span></button>`).join('')}</div>`).join('')}`
 };
 let STORY_LV=null;   // level filter in the Stories tab
+let LEARN_LV=null;   // unit shown on the Learn path (null = the learner's own level)
 const SCENARIOS=[
   ['聊天','Small talk','making friends',0,'聊'],['便利商店','Convenience store','會員、載具、袋子要嗎？',1,'店',1],['手搖飲','Bubble tea shop','半糖少冰',1,'茶',1],
   ['早餐店','Breakfast shop','ordering your usual',1,'早'],['夜市','Night market','prices and snacks',1,'夜'],['計程車','Taxi','giving directions',1,'車'],
@@ -2856,7 +2859,7 @@ function ptResult(){
     <div class="ladder">${[0,1,2,3,4,5].map(l=>`<div class="rung${l<=P.passed?' ok':''}${l===rec&&!beginner||beginner&&l===0?' here':''}"><span>${LEVELS[l][1]}</span><small>${LEVELS[l][0]} · ${LEVELS[l][2]}</small><b>${l<=P.passed?'✓':l===rec&&!beginner||beginner&&l===0?'Start here':''}</b></div>`).join('')}</div>
     <button class="link" id="pick-level">Choose a different level</button>
   </div>`;
-  LEVEL=beginner?0:rec; store.set('tw.level',LEVEL);
+  LEVEL=beginner?0:rec; LEARN_LV=null; store.set('tw.level',LEVEL);
   foot.className='foot'; footIn.innerHTML=`<button class="go" id="go">${beginner?'START LESSON 1':'CONTINUE'}</button>`;
   document.getElementById('go').onclick=()=>{ P=null; beginner?startLesson(1):home(); };
   document.getElementById('pick-level').onclick=levelPicker;
@@ -2873,7 +2876,7 @@ function levelPicker(){
     <div class="choices">${[0,1,2,3,4,5].map(l=>`<button class="choice" data-lv="${l}" aria-pressed="${sel===l}"><span class="lv lvn">${l===0?'N':l}</span><b>${LEVELS[l][1]} · ${LEVELS[l][0]}</b><small>${LEVELS[l][2]} · ${['Your first 500 words','Everyday basics','Daily life with confidence','Work, news and opinions','Complex topics','Near-native'][l]}</small></button>`).join('')}</div>`;
   foot.className='foot'; footIn.innerHTML=`<button class="go" id="go">SAVE</button>`;
   stage.onclick=e=>{ const b=e.target.closest('[data-lv]'); if(!b) return; sel=+b.dataset.lv; stage.querySelectorAll('[data-lv]').forEach(x=>x.setAttribute('aria-pressed',x===b)); };
-  document.getElementById('go').onclick=()=>{ stage.onclick=null; LEVEL=sel; store.set('tw.level',LEVEL); sel===0&&!DONE[1]?startLesson(1):home(); };
+  document.getElementById('go').onclick=()=>{ stage.onclick=null; LEVEL=sel; LEARN_LV=null; store.set('tw.level',LEVEL); sel===0&&!DONE[1]?startLesson(1):home(); };
   document.body.scrollTo({top:0});
 }
 
@@ -3318,6 +3321,7 @@ document.addEventListener('click',e=>{
   const m=e.target.closest('[data-mode]'); if(m){ MODE=m.dataset.mode; store.set('tw.mode2',MODE); applyMode(); bindSegs(); return; }
   if(e.target.closest('#mode-btn,[data-open-modes],#settings-btn')){ openSettings(); return; }
   const tb=e.target.closest('[data-tab]'); if(tb){ if(tb.dataset.tab==='stories'&&tb.closest('.tabbar')){ if(STORY_ID) stopPlayer(true); STORY_ID=null; } home(tb.dataset.tab); return; }
+  const ll=e.target.closest('[data-llv]'); if(ll){ LEARN_LV=+ll.dataset.llv; home('learn'); return; }
   const sl=e.target.closest('[data-slv]'); if(sl){ STORY_LV=sl.dataset.slv==='all'?'all':+sl.dataset.slv; home('stories'); return; }
   const vs=e.target.closest('[data-voc]'); if(vs){ VOC_SRC=vs.dataset.voc; home('practice',!vs.hasAttribute('data-top')); return; }
   const gv=e.target.closest('[data-glv]'); if(gv){ GRAM_LV=+gv.dataset.glv; home('practice',true); return; }
